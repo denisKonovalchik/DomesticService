@@ -6,10 +6,12 @@ import by.konovalchik.domesticservice.entity.Task;
 import by.konovalchik.domesticservice.entity.User;
 import by.konovalchik.domesticservice.service.TaskService;
 import by.konovalchik.domesticservice.service.UserService;
+import by.konovalchik.domesticservice.utils.ControllerMessageManager;
 import by.konovalchik.domesticservice.utils.ConverterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -43,5 +45,17 @@ public class ExecutorTaskController {
     }
 
 
+
+    @GetMapping("/taskToWork/{id}")
+    public ModelAndView taskToWork(@PathVariable long id, ModelAndView modelAndView){
+        modelAndView.setViewName("taskToWork");
+        User user = userService.getCurrentUser();
+        if(taskService.getTaskToWork(id, user)){
+            modelAndView.addObject("messageTaskToWork1", ControllerMessageManager.TASK_TO_WORK_SUCCESSFULLY);
+        }else{
+            modelAndView.addObject("messageTaskToWork2", ControllerMessageManager.TASK_TO_WORK_FAIL);
+        }
+        return modelAndView;
+    }
 
 }

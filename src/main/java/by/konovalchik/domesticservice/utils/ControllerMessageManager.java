@@ -73,4 +73,7 @@ public class ControllerMessageManager {
 
     public static final String USER_NOT_FOUND = "There is no information about the requested user!";
 
+    public static final String TASK_TO_WORK_SUCCESSFULLY = "Task has been taken to work!";
+    public static final String TASK_TO_WORK_FAIL = "Task has not been taken to work!";
+
 }

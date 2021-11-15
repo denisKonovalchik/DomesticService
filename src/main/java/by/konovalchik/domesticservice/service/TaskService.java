@@ -172,6 +172,11 @@ public class TaskService {
 
 
 
+
+
+
+
+
     public boolean changeExpress(long taskId){
         Optional<Task> taskOpt = taskRepository.findById(taskId);
         if(taskOpt.isPresent()){
@@ -190,13 +195,13 @@ public class TaskService {
 
 
 
-    public boolean addUserExecutor(long taskId, User executor){
-        Optional<Task> taskOpt = taskRepository.findById(taskId);
+    public boolean getTaskToWork(long taskId, User executor){
+        Optional<Task> taskOpt = taskRepository.findTaskById(taskId);
         if(taskOpt.isPresent()) {
             Task taskBase = taskOpt.get();
             List<User> users = taskBase.getUsers();
             long executorCount = users.stream().filter(user -> user.getRoles().contains(Role.EXECUTOR)).count();
-            if (users.size() > 2 && executorCount > 0) {
+            if ((users.size() > 1 && executorCount > 0)  && (!taskBase.getStatus().equals(TaskStatus.ACTIVE)) ) {
                 return false;
             } else {
                 users.add(executor);
@@ -206,7 +211,7 @@ public class TaskService {
                 return  true;
             }
         }
-        return false;
+        return true;
     }
 
 

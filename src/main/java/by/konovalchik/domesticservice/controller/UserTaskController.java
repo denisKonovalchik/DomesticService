@@ -69,7 +69,6 @@ public class UserTaskController {
 
     @GetMapping("/deleteTask/{id}")
     public ModelAndView deleteTask(@PathVariable long id, ModelAndView modelAndView){
-        modelAndView.addObject("taskId", id);
         Optional<Task> taskOpt = taskService.getTaskById(id);
         if(taskOpt.isPresent()){
             User user = userService.getCurrentUser();

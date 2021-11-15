@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Task</title>
+</head>
+<body>
+<div th:insert="pages/fragments/header.html :: header"  style="margin-bottom: 0 "></div>
+<div class="container">
+    <div class="row justify-content-center" >
+        <div class="col-sm-3" style="padding: 30px 20px 20px; border-radius:8px; background: #e3f2fd; margin-top: 40px" >
+            <div th:if="${messageTaskToWork1 != null}" class="alert alert-success" role="alert" style="margin-top: 20px;text-align: center">
+                <p th:text="*{messageTaskToWork1}"></p>
+            </div>
+            <div th:if="${messageTaskToWork2 != null}" class="alert alert-danger"  role="alert" style="margin-top: 20px;text-align: center ">
+                <p th:text="*{messageTaskToWork2}"></p>
+            </div>
+            <div style="text-align: center">
+                 <a th:href="@{/executor/executorAccount/getTask}" type="submit" class="btn btn-success">Ok</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
