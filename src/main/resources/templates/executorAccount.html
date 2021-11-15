@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Executor account</title>
+</head>
+<body>
+<div th:insert="pages/fragments/header.html :: header"></div>
+<div class="" >
+    <div class="row justify-content-center" >
+        <div class="col" style="background: #f5f5f5" ></div>
+        <div class="col-2" style="text-align: left; height: 90vh; border-right: solid #6a777a 1px">
+            <ul   style=" margin-top: 40px">
+                <p><b>Category</b></p>
+                <li>Electrician</li>
+                <li>Plumbing</li>
+                <li>Furniture</li>
+                <li>Moving</li>
+                <li>Cleaning</li>
+                <li>DIY</li>
+                <li>Other</li>
+            </ul>
+            <ul style=" margin-top: 30px">
+                <p><b>Status</b></p>
+                <li>Active</li>
+                <li>Work</li>
+                <li>Completed</li>
+                <li>Reopen</li>
+                <li>All</li>
+            </ul>
+        </div>
+        <div class="col-6" style="height: 90vh">
+            <div class="row row-cols-1"  >
+                <div class="col" th:each=" taskDTO : ${listTaskEx}"  style=" margin-top: 30px">
+                    <div class="card text-dark bg-light mb-3"  style="max-width: 600px; background-color: #fafcfa; border-radius: 6px; margin-left: 75px; margin-top: 20px">
+                        <div class="card-header" >
+                            <strong class="me-auto" th:if="${taskDTO.user.id != null}"  ><span>status: </span><span th:text="${taskDTO.task.status.name()}"></span></strong>
+                            <small class="text-muted" style="float: right" ><span>created time: </span><span th:text="${taskDTO.createdTime}"></span></small>
+                        </div>
+
+                        <div class="card-body" >
+                            <div th:if="${taskDTO.task.express}">
+                                <a href="#" class="btn btn btn-warning btn-sm" role="button" style=" border-radius: 50px ">Express</a>
+                            </div>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" ><span>category: </span><span th:text="${taskDTO.task.category.name}"></span>
+
+                            </li>
+                            <li class="list-group-item" th:if="${taskDTO.user.id != 0}">
+                                <span>executor: </span>
+                                <a class="card-link" href=""> <span th:text="${taskDTO.user.username}"></span></a>
+                            </li>
+                        </ul>
+                        <div class="card-body">
+                            <p class="card-text"><span>task topic: </span><span th:text="${taskDTO.task.name}"></span></p>
+                            <p class="card-text"><span>description: </span><span th:text="${taskDTO.task.description}"></span></p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><span>telephone: +</span><span th:text="${taskDTO.task.telephoneTask.number}"></span></li>
+                            <li class="list-group-item"><span>address: </span><span th:text="${taskDTO.task.addressTask.city }"></span>
+                                <span th:text="${taskDTO.task.addressTask.street }"></span>
+                                <span th:text="${taskDTO.task.addressTask.house }"></span>
+                                <span th:text="${taskDTO.task.addressTask.apartment }"></span>
+                            </li>
+                            <li class="list-group-item" ><span>price: </span><span th:text="${taskDTO.task.price}"></span><span> BYN</span>
+                            </li>
+                        </ul>
+                        <div class="card-footer  border-light d-grid gap-3 d-md-flex justify-content-md-end">
+                            <a th:href="@{/executor/executorAccount/getTaskToWork/{id} (id=${taskDTO.task.id})}" class="btn btn-outline-secondary btn-sm" role="button" style="float: right">Get task to work</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!--            <div style="text-align: left; margin-left: 75px; margin-top: 40px " >-->
+<!--                <a th:href="@{/user/userAccount/createTask}"   class="btn btn-outline-success" role="button" >Create task</a>-->
+<!--            </div>-->
+        </div>
+        <div class="col" style="background: #f5f5f5"></div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

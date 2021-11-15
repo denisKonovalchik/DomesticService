@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html th:fragment="header" lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Header</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+<!--    #e3f2fd-->
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light  " style="background-color: #e3f2fd; ">
+    <div class="container-fluid ">
+        <a class="navbar-brand" th:href="@{/}" style="font-family: 'Berkshire Swash', cursive; margin-left: 290px">
+            <img src="/images/starNew.png" alt="" height="35" class="d-inline-block align-text-top">
+            DomesticService
+        </a>
+        <div style="padding-right: 310px">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li  class="nav-item">
+                    <a class="nav-link active" href="#"><p style="font-family: 'Berkshire Swash', cursive; margin-left: 40px"></p></a>
+                </li>
+                <li th:if="${#authorization.expression('isAnonymous()')}"  class="nav-item" >
+                    <a class="nav-link active" th:href="@{/guest/authorization}">Login</a>
+                </li>
+                <li th:if="${#authorization.expression('isAnonymous()')}" class="nav-item"  >
+                    <a class="nav-link active" th:href="@{/guest/registration}">Sign-up</a>
+                </li>
+                
+                <li class="nav-item" style="margin-left:  120px">
+                    <div class="pull-right navbar-text">
+                        <a th:if="${#authorization.expression('isAuthenticated()')}" >
+                            <b><span sec:authentication="name" ></span></b>
+                        </a>
+                        <a th:if="${#authorization.expression('isAnonymous()')}" >
+                            <span>Guest</span>
+                            <img src="/images/avatar_circle.jpg" width="30px" height="30px" style="border-radius: 100px" alt="">
+                        </a>
+                        <a th:if="${#strings.contains(#authentication.principal ,'USER')}" >
+                            <span>(role: user)</span>
+                        </a>
+                        <a th:if="${#strings.contains(#authentication.principal ,'EXECUTOR')}" >
+                            <span>(role: executor)</span>
+                        </a>
+                    </div>
+                </li>
+                <li th:if="${#strings.contains(#authentication.principal ,'USER')}"  class="nav-item dropdown" style=" padding-left: 10px">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                        <img src="/images/avatar_circle.jpg" width="30px" height="30px" style="border-radius: 100px" alt="">
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/user/profile}">Profile</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                    </ul>
+                </li>
+                <li th:if="${#strings.contains(#authentication.principal ,'EXECUTOR')}" class="nav-item dropdown" style=" padding-left: 10px">
+                    <a class="nav-link dropdown-toggle" href="#" id="navDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false"></a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navDropdown">
+                        <li><a class="dropdown-item" th:href="@{/executor/profile}">Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                    </ul>
+                </li>
+                <li th:if="${#authorization.expression('isAuthenticated()')}" style="margin-left: 20px; margin-top: 7px"  >
+                    <form th:action="@{/logout}" method="post">
+                        <button  class="btn btn-outline-secondary btn-sm " >Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
+</body>
+</html>

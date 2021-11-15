@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+</head>
+<body>
+<div th:insert="pages/fragments/header.html :: header"  style="margin-bottom: 0 "></div>
+<div class="container" >
+    <div class="row justify-content-center" >
+        <div class="col-sm-3" style="padding: 30px 20px 20px; border-radius:8px; background: #e3f2fd; margin-top: 40px">
+            <legend style="text-align: center; padding-bottom: 20px">Please Sign up</legend>
+            <form th:action="@{/guest/registration}" th:object="${newUser}" method="post" >
+                <div class="mb-3">
+<!--                    <label for="type" class="col-sm col-form-label">Role:</label>-->
+                    <select th:field="*{role}" required class="form-select form-select-sm-3" aria-label=".form-select-sm example" id="type">
+                        <option value="">Select role:</option>
+                        <option th:value="'USER'" th:text="User"></option>
+                        <option th:value="'EXECUTOR'" th:text="Executor"></option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></p>
+                </div>
+                <div class="mb-3">
+                    <input type="text" th:field="*{firstName}" class="form-control"  aria-describedby="emailHelp"  placeholder="First name"/>
+                    <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+                </div>
+                <div class="mb-3">
+                    <input type="text" th:field="*{lastName}" class="form-control"  aria-describedby="emailHelp" placeholder="Last name"/>
+                    <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+                </div>
+                <div class="mb-3">
+                    <input type="text" th:field="*{telephone}" class="form-control"  aria-describedby="emailHelp" placeholder="Telephone number"/>
+                    <p th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}"></p>
+                </div>
+                <div class="mb-3">
+                    <input type="text" th:field="*{picture}" class="form-control"  aria-describedby="emailHelp" placeholder="Picture"/>
+                    <p th:if="${#fields.hasErrors('picture')}" th:errors="*{picture}"></p>
+                </div>
+                <div class="mb-3">
+                    <input type="email" th:field="*{email}" class="form-control"  aria-describedby="emailHelp" placeholder="Email"/>
+                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                </div>
+                <div class="mb-3">
+                    <input type="text" th:field="*{username}" class="form-control"  aria-describedby="emailHelp" placeholder="Username"/>
+                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                </div>
+                <div class="mb-3">
+                    <input type="password" th:field="*{password}" class="form-control"  aria-describedby="passwordHelp" placeholder="Password"/>
+                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+                    <div id="passwordHelp" class="form-text" style="text-align: center">Do not share your password with anyone else</div>
+                </div>
+                <div style="text-align:center">
+                    <button type="submit" class="btn btn-success" style="">Sign-up</button>
+                </div>
+            </form>
+            <div th:if="${messageReg1 != null}" class="alert alert-success" role="alert" style="margin-top: 20px">
+                <p th:text="*{messageReg1}"></p>
+            </div>
+            <div th:if="${messageReg2 != null}" class="alert alert-danger"  role="alert" style="margin-top: 20px">
+                <p th:text="*{messageReg2}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect",
+      "type": "java.lang.String",
+      "description": "Description for org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect."
+  }
+] }

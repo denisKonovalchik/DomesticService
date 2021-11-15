@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Create task</title>
+</head>
+<body>
+<div th:insert="pages/fragments/header.html :: header"></div>
+<div class="" >
+    <div class="row justify-content-center" >
+        <div class="col" style="background: #f5f5f5" ></div>
+        <div class="col-8" style="height:120vh; ">
+            <div class="col-sm-4 "  style="padding: 30px 20px 20px; border-radius:8px; background: #e3f2fd; margin-left:37%; margin-top: 40px  ">
+                <legend style="text-align: center; padding-bottom: 20px">Create task</legend>
+                <form th:action="@{/user/userAccount/createTask}" th:object="${allArgTaskDTO}"   method="post" >
+                    <select th:field="*{category}" required class="form-select form-select-sm-3" aria-label=".form-select-sm example" id="type">
+                        <option value="">Select category:</option>
+                        <option th:each="cat: ${categories}" th:text="${cat}"  th:value="${cat}" ></option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></p>
+                    <div class="mb-3"style="margin-top: 20px" >
+                        <input type="text" th:field="*{name}" class="form-control"  aria-describedby="emailHelp"  placeholder="Task topic"/>
+                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                    </div>
+                    <div class="mb-3">
+                        <textarea th:field="*{description}"   class="form-control" id="exampleFormControlTextarea1" rows="2"  placeholder="Task description"></textarea>
+                        <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" th:field="*{telephone}" class="form-control"  aria-describedby="emailHelp"  placeholder="Telephone number"/>
+                        <p th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}"></p>
+                    </div>
+
+                        <div class="mb-3">
+                            <input type="text" th:field="*{city}" class="form-control"  aria-describedby="emailHelp"  placeholder="City"/>
+                            <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" th:field="*{street}" class="form-control"  aria-describedby="emailHelp"  placeholder="Street"/>
+                            <p th:if="${#fields.hasErrors('street')}" th:errors="*{street}"></p>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" th:field="*{house}" class="form-control"  aria-describedby="emailHelp"  placeholder="House"/>
+                            <p th:if="${#fields.hasErrors('house')}" th:errors="*{house}"></p>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" th:field="*{apartment}" class="form-control"  aria-describedby="emailHelp"  placeholder="Apartment"/>
+                            <p th:if="${#fields.hasErrors('apartment')}" th:errors="*{apartment}"></p>
+                        </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">Express</label>
+                        <input class="form-check-input" type="checkbox" th:field="*{express}"  id="flexCheckDefault">
+                        <p th:if="${#fields.hasErrors('express')}" th:errors="*{express}"></p>
+                    </div>
+                    <div class="mb-6">
+                        <input type="number" th:field="*{price}" class="form-control"  aria-describedby="emailHelp"  placeholder="Price"/>
+                        <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
+                    </div>
+                    <div style="text-align:center">
+                        <button type="submit" class="btn btn-success" style="margin-top:30px">Create</button>
+                    </div>
+                    <div style="text-align: center; margin-top: 20px">
+                        <a  th:href="@{/user/userAccount/getTask}">Return</a>
+                    </div>
+                </form>
+                <div th:if="${messageCreateTask1 != null}" class="alert alert-success" role="alert" style="margin-top: 20px">
+                    <p th:text="*{messageCreateTask1}"></p>
+                </div>
+                <div th:if="${messageCreateTask2 != null}" class="alert alert-danger"  role="alert" style="margin-top: 20px">
+                    <p th:text="*{messageCreateTask2}"></p>
+                </div>
+            </div>
+        </div>
+        <div class="col" style="background: #f5f5f5"></div>
+    </div>
+</div>
+
+
+
+</body>
+</html>
