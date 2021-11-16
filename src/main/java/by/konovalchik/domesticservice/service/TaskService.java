@@ -28,7 +28,7 @@ public class TaskService {
 
 
     public boolean createTask(Task task, User user) {
-           if(user.getRoles().contains(Role.USER)) {
+           if(user.getRoles().contains(Role.ROLE_USER)) {
                List<User> users = new ArrayList<>();
                users.add(user);
                task.setUsers(users);
@@ -41,7 +41,7 @@ public class TaskService {
 
     public boolean delete(User user, Task task) {
         if (task.getStatus().equals(TaskStatus.ACTIVE)){
-            if ((user.getRoles().contains(Role.USER) || user.getRoles().contains(Role.ADMIN))){
+            if ((user.getRoles().contains(Role.ROLE_USER) || user.getRoles().contains(Role.ROLE_ADMIN))){
                   taskRepository.deleteById(task.getId());
                    return true;
             }
@@ -200,7 +200,7 @@ public class TaskService {
         if(taskOpt.isPresent()) {
             Task taskBase = taskOpt.get();
             List<User> users = taskBase.getUsers();
-            long executorCount = users.stream().filter(user -> user.getRoles().contains(Role.EXECUTOR)).count();
+            long executorCount = users.stream().filter(user -> user.getRoles().contains(Role.ROLE_EXECUTOR)).count();
             if ((users.size() > 1 && executorCount > 0)  && (!taskBase.getStatus().equals(TaskStatus.ACTIVE)) ) {
                 return false;
             } else {
@@ -271,9 +271,6 @@ public class TaskService {
         taskExecutorOpt.ifPresent(mainList::addAll);
         return Optional.of(mainList);
     }
-
-
-
 
 
 

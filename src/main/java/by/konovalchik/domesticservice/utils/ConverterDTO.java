@@ -83,7 +83,7 @@ public class ConverterDTO {
     public static TaskUserDTO getTaskUserCard(Task task) {
         DateTimeFormatter format = DateTimeFormatter.ofPattern(Patterns.TIME_FORMAT);
         String time = task.getLocalDateTime().format(format);
-        Optional<User> userUsOpt = task.getUsers().stream().filter(user -> user.getRoles().contains(Role.EXECUTOR)).findFirst();
+        Optional<User> userUsOpt = task.getUsers().stream().filter(user -> user.getRoles().contains(Role.ROLE_EXECUTOR)).findFirst();
         if (userUsOpt.isPresent()) {
             User userExecutor = userUsOpt.get();
             return TaskUserDTO.builder()
@@ -104,7 +104,7 @@ public class ConverterDTO {
     public static TaskUserDTO getTaskExecutorCard(Task task) {
         DateTimeFormatter format = DateTimeFormatter.ofPattern(Patterns.TIME_FORMAT);
         String time = task.getLocalDateTime().format(format);
-        Optional<User> userExOpt = task.getUsers().stream().filter(user -> user.getRoles().contains(Role.USER)).findFirst();
+        Optional<User> userExOpt = task.getUsers().stream().filter(user -> user.getRoles().contains(Role.ROLE_USER)).findFirst();
         if (userExOpt.isPresent()) {
             User userUser = userExOpt.get();
             return TaskUserDTO.builder()
