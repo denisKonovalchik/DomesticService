@@ -6,6 +6,7 @@ import by.konovalchik.domesticservice.repository.TaskRepository;
 import by.konovalchik.domesticservice.repository.TelephoneTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 
 
 
-
+@Transactional
 @Service
 public class TaskService {
 
