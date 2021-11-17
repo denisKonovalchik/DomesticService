@@ -39,10 +39,10 @@ public class Task {
     private double price;
 
     @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    TelephoneTask telephoneTask;
+    private TelephoneTask telephoneTask;
 
     @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    AddressTask addressTask;
+    private AddressTask addressTask;
 
 
     @ManyToMany(fetch = FetchType.LAZY)

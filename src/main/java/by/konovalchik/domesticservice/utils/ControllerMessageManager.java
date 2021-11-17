@@ -43,12 +43,12 @@ public class ControllerMessageManager {
     public static final String DELETE_USER_FAIL = "User has not been deleted!";
     public static final String DELETE_TELEPHONE_FAIL = "Telephone has not been deleted!";
     public static final String DELETE_TELEPHONE_SUCCESSFULLY = "Telephone has been deleted!";
-    public static final String DELETE_TASK_SUCCESSFULLY = "Product has been deleted!";
-    public static final String DELETE_TASK_FAIL = "Product has not been deleted!";
-    public static final String ADD_TASK_SUCCESSFULLY = "Product successfully added!";
-    public static final String ADD_TASK_FAIL = "Product addition error";
+    public static final String DELETE_TASK_SUCCESSFULLY = "Task has been deleted!";
+    public static final String DELETE_TASK_FAIL = "Task has not been deleted!";
+    public static final String ADD_TASK_SUCCESSFULLY = "Task successfully added!";
+    public static final String ADD_TASK_FAIL = "Task addition error";
 
-    public static final String UPDATE_TASK_NAME_SUCCESSFULLY = "Product name has been changed!";
+    public static final String UPDATE_TASK_NAME_SUCCESSFULLY = "Task name has been changed!";
 
     public static final String UPDATE_DESCRIPTION_SUCCESSFULLY = "Description has been changed!";
     public static final String UPDATE_DESCRIPTION_FAIL = "Description has not been changed!";
@@ -64,6 +64,7 @@ public class ControllerMessageManager {
     public static final String UPDATE_EXPRESS_FAIL = "Express has not been changed!";
 
     public static final String UPDATE_RATING_SUCCESSFULLY = "Rating has been changed!";
+    public static final String UPDATE_RATING_FAIL = "Rating has not been changed!";
 
     public static final String ADD_TEL_SUCCESSFULLY = "Telephone successfully added";
     public static final String ADD_TEL_FAIL = "The adding of the telephone failed!";
@@ -76,4 +77,9 @@ public class ControllerMessageManager {
     public static final String TASK_TO_WORK_SUCCESSFULLY = "Task has been taken to work!";
     public static final String TASK_TO_WORK_FAIL = "Task has not been taken to work!";
 
+    public static final String TASK_TO_DONE_SUCCESSFULLY = "The task has been transferred to the \"DONE\" status. Wait for customer confirmation.";
+    public static final String TASK_TO_DONE_FAIL = "The task is already in the \"Done\" status!";
+
+    public static final String CLOSE_TASK_SUCCESSFULLY = "Task has been closed!";
+    public static final String CLOSE_TASK_FAIL = "Task has not been closed!";
 }

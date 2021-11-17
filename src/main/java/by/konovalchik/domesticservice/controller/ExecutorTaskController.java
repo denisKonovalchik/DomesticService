@@ -2,17 +2,18 @@ package by.konovalchik.domesticservice.controller;
 
 
 import by.konovalchik.domesticservice.dto.cardDTO.TaskUserDTO;
+import by.konovalchik.domesticservice.dto.gradeDTO.GradeDTO;
 import by.konovalchik.domesticservice.entity.Task;
+import by.konovalchik.domesticservice.entity.TaskStatus;
 import by.konovalchik.domesticservice.entity.User;
+import by.konovalchik.domesticservice.service.RatingService;
 import by.konovalchik.domesticservice.service.TaskService;
 import by.konovalchik.domesticservice.service.UserService;
 import by.konovalchik.domesticservice.utils.ControllerMessageManager;
 import by.konovalchik.domesticservice.utils.ConverterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -28,6 +29,9 @@ public class ExecutorTaskController {
 
     @Autowired
     TaskService taskService;
+
+    @Autowired
+    RatingService ratingService;
 
 
 
@@ -57,5 +61,38 @@ public class ExecutorTaskController {
         }
         return modelAndView;
     }
+
+
+
+    @GetMapping("/taskToDone/{id}")
+    public ModelAndView taskToDone(@PathVariable long id, ModelAndView modelAndView){
+        modelAndView.addObject("taskIdToDone", id);
+        modelAndView.addObject("gradeDTOex", new GradeDTO());
+        modelAndView.setViewName("taskToDone");
+        User user = userService.getCurrentUser();
+        if(taskService.updateStatus(id, TaskStatus.DONE)){
+            modelAndView.addObject("messageTaskToDone1", ControllerMessageManager.TASK_TO_DONE_SUCCESSFULLY);
+        }else{
+            modelAndView.addObject("messageTaskToDone2", ControllerMessageManager.TASK_TO_DONE_FAIL);
+        }
+        return modelAndView;
+    }
+
+
+
+    @PostMapping("/taskToDone")
+    public ModelAndView taskToDone(@ModelAttribute("gradeDTOex") GradeDTO gradeDTO, ModelAndView modelAndView){
+        modelAndView.setViewName("ratingToUpdateEx");
+        User user = userService.getCurrentUser();
+        if(ratingService.updateRatingUser(gradeDTO.getGrade(), user.getId(), gradeDTO.getId())){
+            modelAndView.addObject("messageRatingUpdate1", ControllerMessageManager.UPDATE_RATING_SUCCESSFULLY);
+        }else{
+            modelAndView.addObject("messageRatingUpdate2", ControllerMessageManager.UPDATE_RATING_FAIL);
+        }
+        return modelAndView;
+    }
+
+
+
 
 }

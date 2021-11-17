@@ -31,26 +31,26 @@
                         <p th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}"></p>
                     </div>
 
-                        <div class="mb-3">
-                            <input type="text" th:field="*{city}" class="form-control"  aria-describedby="emailHelp"  placeholder="City"/>
-                            <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
-                        </div>
-                        <div class="mb-3">
-                            <input type="text" th:field="*{street}" class="form-control"  aria-describedby="emailHelp"  placeholder="Street"/>
-                            <p th:if="${#fields.hasErrors('street')}" th:errors="*{street}"></p>
-                        </div>
-                        <div class="mb-3">
-                            <input type="text" th:field="*{house}" class="form-control"  aria-describedby="emailHelp"  placeholder="House"/>
-                            <p th:if="${#fields.hasErrors('house')}" th:errors="*{house}"></p>
-                        </div>
-                        <div class="mb-3">
-                            <input type="text" th:field="*{apartment}" class="form-control"  aria-describedby="emailHelp"  placeholder="Apartment"/>
-                            <p th:if="${#fields.hasErrors('apartment')}" th:errors="*{apartment}"></p>
-                        </div>
+                    <div class="mb-3">
+                         <input type="text" th:field="*{city}" class="form-control"  aria-describedby="emailHelp"  placeholder="City"/>
+                         <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
+                    </div>
+                    <div class="mb-3">
+                          <input type="text" th:field="*{street}" class="form-control"  aria-describedby="emailHelp"  placeholder="Street"/>
+                          <p th:if="${#fields.hasErrors('street')}" th:errors="*{street}"></p>
+                    </div>
+                    <div class="mb-3">
+                          <input type="text" th:field="*{house}" class="form-control"  aria-describedby="emailHelp"  placeholder="House"/>
+                          <p th:if="${#fields.hasErrors('house')}" th:errors="*{house}"></p>
+                    </div>
+                    <div class="mb-3">
+                           <input type="text" th:field="*{apartment}" class="form-control"  aria-describedby="emailHelp"  placeholder="Apartment"/>
+                           <p th:if="${#fields.hasErrors('apartment')}" th:errors="*{apartment}"></p>
+                    </div>
                     <div class="form-check">
-                        <label class="form-check-label" for="flexCheckDefault">Express</label>
-                        <input class="form-check-input" type="checkbox" th:field="*{express}"  id="flexCheckDefault">
-                        <p th:if="${#fields.hasErrors('express')}" th:errors="*{express}"></p>
+                          <label class="form-check-label" for="flexCheckDefault">Express</label>
+                          <input class="form-check-input" type="checkbox" th:field="*{express}"  id="flexCheckDefault">
+                          <p th:if="${#fields.hasErrors('express')}" th:errors="*{express}"></p>
                     </div>
                     <div class="mb-6" style="margin-top: 13px">
                         <div class="input-group input-group-sm mb-3">

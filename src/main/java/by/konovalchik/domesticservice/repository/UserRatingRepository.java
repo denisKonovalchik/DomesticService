@@ -9,4 +9,6 @@ public interface UserRatingRepository extends JpaRepository<UserRating, Long> {
 
 
 
+
+
 }

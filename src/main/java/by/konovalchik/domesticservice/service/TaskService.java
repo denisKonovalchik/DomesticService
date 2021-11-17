@@ -7,11 +7,14 @@ import by.konovalchik.domesticservice.repository.TelephoneTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+
 
 
 @Service
@@ -27,6 +30,8 @@ public class TaskService {
     AddressTaskRepository addressRepository;
 
 
+
+
     public boolean createTask(Task task, User user) {
            if(user.getRoles().contains(Role.ROLE_USER)) {
                List<User> users = new ArrayList<>();
@@ -39,14 +44,18 @@ public class TaskService {
     }
 
 
-    public boolean delete(User user, Task task) {
-        if (task.getStatus().equals(TaskStatus.ACTIVE)){
-            if ((user.getRoles().contains(Role.ROLE_USER) || user.getRoles().contains(Role.ROLE_ADMIN))){
-                  taskRepository.deleteById(task.getId());
-                   return true;
+    public boolean delete(User user, long taskId) {
+        Optional<Task> taskOpt = taskRepository.findById(taskId);
+        if(taskOpt.isPresent()) {
+            Task task = taskOpt.get();
+            if (task.getStatus().equals(TaskStatus.ACTIVE)) {
+                if ((user.getRoles().contains(Role.ROLE_USER) || user.getRoles().contains(Role.ROLE_ADMIN))) {
+                    taskRepository.deleteById(task.getId());
+                    return true;
+                }
             }
         }
-       return true;
+        return false;
     }
 
 
@@ -159,21 +168,16 @@ public class TaskService {
         Optional<Task> taskOpt = taskRepository.findById(taskId);
         if(taskOpt.isPresent()){
             Task taskBase = taskOpt.get();
-            if(taskBase.getStatus().equals(TaskStatus.ACTIVE)){
+            if(taskBase.getStatus().equals(newStatus)){
+               return false;
+            }else {
                 taskBase.setStatus(newStatus);
                 taskRepository.save(taskBase);
                 return true;
-            }else{
-                return  false;
             }
         }
-        return false;
+        return  false;
     }
-
-
-
-
-
 
 
 
@@ -215,6 +219,7 @@ public class TaskService {
     }
 
 
+
     public boolean deleteUserExecutor(long taskId, User executor){
         Optional<Task> taskOpt = taskRepository.findById(taskId);
         if(taskOpt.isPresent()) {
@@ -234,10 +239,6 @@ public class TaskService {
         return false;
     }
 
-
-    public Optional<Task> getTaskById(long taskId){
-        return taskRepository.findTaskById(taskId);
-    }
 
 
     public Optional<List<Task>> getTaskByStatus(TaskStatus status ){
@@ -262,7 +263,6 @@ public class TaskService {
 
 
 
-
     public Optional<List<Task>> getAllActiveAndWorkTask(long executorId){
         Optional<List<Task>> tasksActiveOpt = taskRepository.findAllByStatus(TaskStatus.ACTIVE);
         Optional<List<Task>> taskExecutorOpt = getAllByUserId(executorId);
@@ -271,7 +271,6 @@ public class TaskService {
         taskExecutorOpt.ifPresent(mainList::addAll);
         return Optional.of(mainList);
     }
-
 
 
 
@@ -287,6 +286,18 @@ public class TaskService {
     }
 
 
+    public boolean closeTask(User user, long taskId){
+        Optional<Task> taskOpt = taskRepository.findById(taskId);
+        if(taskOpt.isPresent()){
+            Task task = taskOpt.get();
+            if(task.getStatus().equals(TaskStatus.DONE) && user.getRoles().contains(Role.ROLE_USER) ){
+                task.setStatus(TaskStatus.COMPLETED);
+                taskRepository.save(task);
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 }

@@ -60,7 +60,7 @@
                                 </li>
                                 <li class="list-group-item" th:if="${taskDTO.user.id != 0}">
                                         <span>executor: </span>
-                                        <a class="card-link" href=""> <span th:text="${taskDTO.user.username}"></span></a>
+                                        <a class="card-link" th:href="@{/userInfo/getUserById/{id} (id=${taskDTO.user.id})}"> <span th:text="${taskDTO.user.username}"></span></a>
                                 </li>
                            </ul>
                            <div class="card-body">
@@ -92,7 +92,14 @@
                                  </li>
                            </ul>
                            <div class="card-footer  border-light d-grid gap-3 d-md-flex justify-content-md-end">
-                                  <a th:href="@{/user/userAccount/deleteTask/{id} (id=${taskDTO.task.id})}" class="btn btn-outline-secondary btn-sm" role="button" style="float: right">Delete</a>
+                               <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                   <a  th:if="${taskDTO.task.status.name() == 'DONE' }"   th:href="@{/user/userAccount/closeTask/{id} (id=${taskDTO.task.id})}" class="btn btn-outline-success btn-sm " type="button" style="margin-right: 20px" >
+                                       Close task
+                                   </a>
+                                   <a  th:if="${taskDTO.task.status.name() == 'ACTIVE' }" th:href="@{/user/userAccount/deleteTask/{id} (id=${taskDTO.task.id})}" class="btn btn-outline-secondary btn-sm" role="button" style="margin-right: 20px">
+                                       Delete
+                                   </a>
+                               </div>
                            </div>
                     </div>
                 </div>

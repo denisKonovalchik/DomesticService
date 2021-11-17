@@ -40,8 +40,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .failureHandler(authenticationFailureHandler())
                 .and()
                 .logout().permitAll();
-//        http.csrf().disable();
-//        http.headers().frameOptions().disable();
+                 http.csrf().disable();
+        http.headers().frameOptions().disable();
     }
 
 

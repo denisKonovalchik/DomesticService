@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  >
+<head>
+    <meta charset="UTF-8">
+    <title>Task completed </title>
+</head>
+<body>
+<div th:insert="pages/fragments/header.html :: header"  style="margin-bottom: 0 "></div>
+<div class="container">
+    <div class="row justify-content-center" >
+        <div class="col-sm-3" style="padding: 30px 20px 20px; border-radius:8px; background: #e3f2fd; margin-top: 40px" >
+            <legend style="text-align: center; padding-bottom: 20px">Task completed</legend>
+            <div th:if="${messageTaskCompleted1 != null}" class="alert alert-success" role="alert" style="margin-top: 20px;text-align: center">
+                <p th:text="*{messageTaskCompleted1}"></p>
+            </div>
+            <div th:if="${messageTaskCompleted2 != null}" class="alert alert-danger"  role="alert" style="margin-top: 20px;text-align: center ">
+                <p th:text="*{messageTaskCompleted2}"></p>
+            </div>
+
+            <div style="margin-top: 10px; text-align: center ">
+                <p>Please rate the work of the executor from 1 to 5:</p>
+                <form th:action="@{/user/userAccount/closeTask}"  th:object="${gradeDTO}"  th:method="post">
+                        <input type="hidden"  name="id" th:value="${taskIdToClose}" class="form-control"  />
+                        <div th:each="i: ${#numbers.sequence(1, 5)} "  class="form-check form-check-inline">
+                            <input th:field="*{grade}" th:value="${i}"   class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" >
+                            <label th:for="ratio" th:text="${i}" class="form-check-label" for="inlineRadio1"></label>
+                        </div>
+                        <div style="text-align: center; margin-top: 15px">
+                            <button type="submit" class="btn btn-success">Ok</button>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,15 +1,13 @@
 package by.konovalchik.domesticservice.controller;
 
-
-import by.konovalchik.domesticservice.dto.cardDTO.TaskUserDTO;
-import by.konovalchik.domesticservice.dto.taskDTO.AllArgsTaskDTO;
+import by.konovalchik.domesticservice.dto.cardDTO.UserInfoDTO;
 import by.konovalchik.domesticservice.dto.telephoneDTO.NumberTelDTO;
 import by.konovalchik.domesticservice.dto.userDTO.EmailUserDTO;
 import by.konovalchik.domesticservice.dto.userDTO.FirstNameUserDTO;
 import by.konovalchik.domesticservice.dto.userDTO.LastNameUserDTO;
 import by.konovalchik.domesticservice.dto.userDTO.PictureUserDTO;
 import by.konovalchik.domesticservice.entity.*;
-import by.konovalchik.domesticservice.service.TaskService;
+;
 import by.konovalchik.domesticservice.service.UserService;
 import by.konovalchik.domesticservice.utils.ControllerMessageManager;
 import by.konovalchik.domesticservice.utils.ConverterDTO;
@@ -20,16 +18,29 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.List;
+
 import java.util.Optional;
 
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/userInfo")
 public class UserController {
 
     @Autowired
     UserService userService;
+
+
+
+    @GetMapping("/getUserById/{id}")
+    public ModelAndView updateFirstName(@PathVariable long id, ModelAndView modelAndView) {
+        modelAndView.setViewName("userInfo");
+        Optional<User> userInfoOpt = userService.getUserById(id);
+        if(userInfoOpt.isPresent()){
+            UserInfoDTO userInfoDTO = ConverterDTO.getUserInfoCard(userInfoOpt.get());
+            modelAndView.addObject("userInfoDTO", userInfoDTO);
+        }
+        return modelAndView;
+    }
 
 
 

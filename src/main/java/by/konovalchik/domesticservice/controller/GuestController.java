@@ -1,29 +1,22 @@
 package by.konovalchik.domesticservice.controller;
 
-import by.konovalchik.domesticservice.dto.telephoneDTO.NumberTelDTO;
 import by.konovalchik.domesticservice.dto.userDTO.*;
 import by.konovalchik.domesticservice.entity.Role;
-import by.konovalchik.domesticservice.entity.Telephone;
-import by.konovalchik.domesticservice.service.TelephoneService;
+
 import by.konovalchik.domesticservice.service.UserService;
 import by.konovalchik.domesticservice.entity.User;
 import by.konovalchik.domesticservice.utils.ControllerMessageManager;
 import by.konovalchik.domesticservice.utils.ConverterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
+
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
+
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.security.Principal;
+
 import java.util.Arrays;
 
 @Controller

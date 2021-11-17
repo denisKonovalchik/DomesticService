@@ -12,11 +12,10 @@
             <legend style="text-align: center; padding-bottom: 20px">Please Sign up</legend>
             <form th:action="@{/guest/registration}" th:object="${newUser}" method="post" >
                 <div class="mb-3">
-<!--                    <label for="type" class="col-sm col-form-label">Role:</label>-->
                     <select th:field="*{role}" required class="form-select form-select-sm-3" aria-label=".form-select-sm example" id="type">
                         <option value="">Select role:</option>
-                        <option th:value="'USER'" th:text="User"></option>
-                        <option th:value="'EXECUTOR'" th:text="Executor"></option>
+                        <option th:value="'ROLE_USER'" th:text="User"></option>
+                        <option th:value="'ROLE_EXECUTOR'" th:text="Executor"></option>
                     </select>
                     <p th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></p>
                 </div>

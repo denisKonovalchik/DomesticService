@@ -3,11 +3,13 @@ package by.konovalchik.domesticservice.controller;
 
 import by.konovalchik.domesticservice.dto.addressDTO.AllArgsAddressDTO;
 import by.konovalchik.domesticservice.dto.cardDTO.TaskUserDTO;
+import by.konovalchik.domesticservice.dto.gradeDTO.GradeDTO;
 import by.konovalchik.domesticservice.dto.taskDTO.*;
 import by.konovalchik.domesticservice.dto.telephoneDTO.IdNumberTelDTO;
 import by.konovalchik.domesticservice.entity.CategoryOfTask;
 import by.konovalchik.domesticservice.entity.Task;
 import by.konovalchik.domesticservice.entity.User;
+import by.konovalchik.domesticservice.service.RatingService;
 import by.konovalchik.domesticservice.service.TaskService;
 import by.konovalchik.domesticservice.service.UserService;
 import by.konovalchik.domesticservice.utils.ControllerMessageManager;
@@ -34,6 +36,9 @@ public class UserTaskController {
 
     @Autowired
     TaskService taskService;
+
+    @Autowired
+    RatingService ratingService;
 
 
 
@@ -69,14 +74,42 @@ public class UserTaskController {
 
     @GetMapping("/deleteTask/{id}")
     public ModelAndView deleteTask(@PathVariable long id, ModelAndView modelAndView){
-        Optional<Task> taskOpt = taskService.getTaskById(id);
-        if(taskOpt.isPresent()){
-            User user = userService.getCurrentUser();
-            if(taskService.delete(user, taskOpt.get())){
-                modelAndView.addObject("messageDeleteTask1", ControllerMessageManager.DELETE_TASK_SUCCESSFULLY);
-            }else{
-                modelAndView.addObject("messageDeleteTask2", ControllerMessageManager.DELETE_TASK_FAIL);
-            }
+        modelAndView.setViewName("taskToDelete");
+        User user = userService.getCurrentUser();
+        if(taskService.delete(user, id)){
+             modelAndView.addObject("messageDeleteTask1", ControllerMessageManager.DELETE_TASK_SUCCESSFULLY);
+        }else{
+             modelAndView.addObject("messageDeleteTask2", ControllerMessageManager.DELETE_TASK_FAIL);
+        }
+        return modelAndView;
+    }
+
+
+
+    @GetMapping("/closeTask/{id}")
+    public ModelAndView closeTask(@PathVariable long id,ModelAndView modelAndView){
+        modelAndView.addObject("taskIdToClose", id);
+        modelAndView.addObject("gradeDTO", new GradeDTO());
+        modelAndView.setViewName("taskToCompleted");
+        User user = userService.getCurrentUser();
+        if(taskService.closeTask(user, id)){
+            modelAndView.addObject("messageTaskCompleted1", ControllerMessageManager.CLOSE_TASK_SUCCESSFULLY);
+        }else{
+            modelAndView.addObject("messageTaskCompleted2", ControllerMessageManager.CLOSE_TASK_FAIL);
+        }
+        return modelAndView;
+    }
+
+
+
+    @PostMapping("/closeTask")
+    public ModelAndView closeTask(@ModelAttribute("GradeDTO") GradeDTO gradeDTO, ModelAndView modelAndView){
+        modelAndView.setViewName("ratingToUpdateUs");
+        User user = userService.getCurrentUser();
+        if(ratingService.updateRatingUser(gradeDTO.getGrade(), user.getId(), gradeDTO.getId())){
+            modelAndView.addObject("messageRatingUpdate1", ControllerMessageManager.UPDATE_RATING_SUCCESSFULLY);
+        }else{
+            modelAndView.addObject("messageRatingUpdate2", ControllerMessageManager.UPDATE_RATING_FAIL);
         }
         return modelAndView;
     }
@@ -95,6 +128,7 @@ public class UserTaskController {
         }
         return modelAndView;
     }
+
 
 
 
@@ -123,7 +157,6 @@ public class UserTaskController {
         }
         return modelAndView;
     }
-
 
 
 

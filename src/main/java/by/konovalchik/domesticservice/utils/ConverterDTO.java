@@ -2,6 +2,7 @@ package by.konovalchik.domesticservice.utils;
 
 import by.konovalchik.domesticservice.dto.addressDTO.AllArgsAddressDTO;
 import by.konovalchik.domesticservice.dto.cardDTO.TaskUserDTO;
+import by.konovalchik.domesticservice.dto.cardDTO.UserInfoDTO;
 import by.konovalchik.domesticservice.dto.taskDTO.AllArgsTaskDTO;
 import by.konovalchik.domesticservice.dto.telephoneDTO.NumberTelDTO;
 import by.konovalchik.domesticservice.dto.userDTO.AllArgUserDTO;
@@ -14,6 +15,10 @@ import java.util.*;
 
 
 public class ConverterDTO {
+
+
+
+
 
 
     public static User getAllArgUsersDTO(AllArgUserDTO allArgUserDTO) {
@@ -77,6 +82,23 @@ public class ConverterDTO {
                     .localDateTime(LocalDateTime.now())
                     .build();
     }
+
+
+
+    public static UserInfoDTO getUserInfoCard (User user){
+
+        return  UserInfoDTO.builder().user(User.builder().username(user.getUsername())
+                                                         .firstName(user.getFirstName())
+                                                         .lastName(user.getLastName())
+                                                         .email(user.getEmail())
+                                                         .telephone(user.getTelephone())
+                                                         .rating(user.getRating())
+                                                         .picture(user.getPicture())
+                                                         .build())
+                                                         .build();
+
+    }
+
 
 
 

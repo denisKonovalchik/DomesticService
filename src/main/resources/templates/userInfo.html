@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>User info</title>
+</head>
+<body>
+<div th:insert="pages/fragments/header.html :: header"></div>
+<div class="" >
+    <div class="row justify-content-center" >
+        <div class="col" style="background: #f5f5f5" ></div>
+        <div class="col-8" style="height: 90vh; ">
+            <div class="col-sm-3 "  style="padding: 30px 20px 20px; border-radius:8px; background: #e3f2fd; margin-left:37%; margin-top: 40px  ">
+                <legend style="text-align: center; padding-bottom: 10px">User info</legend>
+                <img th:if="${userInfoDTO.user.picture != null }" th:src="${userInfoDTO.user.picture}" alt="" class="card-img-top">
+                <img th:if="${userInfoDTO.user.picture == null }" src="images/avatar12.jpg" alt="" class="card-img-top">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><b>username: </b><span th:text="${userInfoDTO.user.username}"></span></li>
+                    <li class="list-group-item"><b>first name: </b><span th:text="${userInfoDTO.user.firstName}"></span></li>
+                    <li class="list-group-item"><b>last name: </b><span th:text="${userInfoDTO.user.lastName}"></span></li>
+                    <li class="list-group-item"><b>telephone: +</b><span th:text="${userInfoDTO.user.telephone.number}"></span></li>
+                    <li class="list-group-item"><b>email: </b><span th:text="${userInfoDTO.user.email}"></span></li>
+                    <li class="list-group-item"><b>rating: </b><span th:text="${userInfoDTO.user.rating.score}"></span></li>
+                </ul>
+                <div th:if="${#strings.contains(#authentication.principal ,'USER')}"  style="text-align: center; margin-top: 20px">
+                    <a th:href="@{/user/userAccount/getTask}" type="submit" class="btn btn-success">Ok</a>
+                </div>
+                <div th:if="${#strings.contains(#authentication.principal ,'EXECUTOR')}"  style="text-align: center; margin-top: 20px">
+                    <a th:href="@{/executor/executorAccount/getTask}" type="submit" class="btn btn-success">Ok</a>
+                </div>
+            </div>
+        </div>
+        <div class="col" style="background: #f5f5f5"></div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!--<div class="container">-->
+<!--    <div class="row justify-content-center" >-->
+<!--        <div class="col-sm-3" style="padding: 20px 20px 20px; border-radius:8px; background: #e3f2fd; margin-top: 40px" >-->
+<!--             <div class="card" style="width: 18rem;">-->
+<!--                 <div class="card-header" style="text-align: center">-->
+<!--                        User info-->
+<!--                 </div>-->
+<!--                 <img th:if="${userInfoDTO.user.picture != null }" th:src="${userInfoDTO.user.picture}" alt="" class="card-img-top">-->
+<!--                 <img th:if="${userInfoDTO.user.picture == null }" src="images/avatar12.jpg" alt="" class="card-img-top">-->
+<!--                 <ul class="list-group list-group-flush">-->
+<!--                    <li class="list-group-item"><b>username: </b><span th:text="${userInfoDTO.user.username}"></span></li>-->
+<!--                    <li class="list-group-item"><b>first name: </b><span th:text="${userInfoDTO.user.firstName}"></span></li>-->
+<!--                    <li class="list-group-item"><b>last name: </b><span th:text="${userInfoDTO.user.lastName}"></span></li>-->
+<!--                    <li class="list-group-item"><b>telephone: +</b><span th:text="${userInfoDTO.user.telephone.number}"></span></li>-->
+<!--                    <li class="list-group-item"><b>email: </b><span th:text="${userInfoDTO.user.email}"></span></li>-->
+<!--                    <li class="list-group-item"><b>rating: </b><span th:text="${userInfoDTO.user.rating.score}"></span></li>-->
+<!--                  </ul>-->
+<!--              </div>-->
+<!--            <div  th:if="${#strings.contains(#authentication.principal ,'USER') }"  style="text-align: center; margin-top: 20px">-->
+<!--                <a  th:href="@{/user/userAccount/getTask}">Return</a>-->
+<!--            </div>-->
+<!--            <div  th:if="${#strings.contains(#authentication.principal ,'EXECUTOR') }" style="text-align: center; margin-top: 20px">-->
+<!--                <a  th:href="@{/executer/executorAccount/getTask}">Return</a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+</body>
+</html>

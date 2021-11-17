@@ -22,11 +22,13 @@ public class UserGrade {
     private int grade;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    User user;
+    private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    UserRating userRating;
+    private UserRating userRating;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    Task task;
 
 
 

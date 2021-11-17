@@ -45,7 +45,7 @@ public class User implements UserDetails {
     private Telephone telephone;
 
     @ManyToMany(mappedBy = "users",  cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    List<Task> tasks;
+    private List<Task> tasks;
 
 
     @Enumerated(EnumType.STRING)
