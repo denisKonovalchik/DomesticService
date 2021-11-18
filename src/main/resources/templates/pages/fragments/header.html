@@ -45,30 +45,30 @@
                             <span>Guest</span>
                             <img src="/images/avatar_circle.jpg" width="30px" height="30px" style="border-radius: 100px" alt="">
                         </a>
-                        <a th:if="${#strings.contains(#authentication.principal ,'USER')}" >
+                        <a th:if="${#strings.contains(#authentication.principal ,'ROLE_USER')}" >
                             <span>(role: user)</span>
                         </a>
-                        <a th:if="${#strings.contains(#authentication.principal ,'EXECUTOR')}" >
+                        <a th:if="${#strings.contains(#authentication.principal ,'ROLE_EXECUTOR')}" >
                             <span>(role: executor)</span>
                         </a>
                     </div>
                 </li>
-                <li th:if="${#strings.contains(#authentication.principal ,'USER')}"  class="nav-item dropdown" style=" padding-left: 10px">
+                <li th:if="${#strings.contains(#authentication.principal ,'ROLE_USER')}"  class="nav-item dropdown" style=" padding-left: 10px">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
                         <img src="/images/avatar_circle.jpg" width="30px" height="30px" style="border-radius: 100px" alt="">
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" th:href="@{}">Profile</a></li>
+<!--                        <li><a class="dropdown-item" th:href="@{}">Profile</a></li>-->
 <!--                        <li><a class="dropdown-item" href="#">Something else here</a></li>-->
 <!--                        <li><hr class="dropdown-divider"></li>-->
                     </ul>
                 </li>
-                <li th:if="${#strings.contains(#authentication.principal ,'EXECUTOR')}" class="nav-item dropdown" style=" padding-left: 10px">
+                <li th:if="${#strings.contains(#authentication.principal ,'ROLE_EXECUTOR')}" class="nav-item dropdown" style=" padding-left: 10px">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"   href="#"  role="button"  aria-expanded="false">
                         <img src="/images/avatar_circle.jpg" width="30px" height="30px" style="border-radius: 100px" alt="">
                     </a>
                     <ul class="dropdown-menu" >
-                        <li><a class="dropdown-item" th:href="@{}">Profile</a></li>
+<!--                        <li><a class="dropdown-item" th:href="@{}">Profile</a></li>-->
 <!--                        <li><a class="dropdown-item" href="#">Something else here</a></li>-->
 <!--                        <li><hr class="dropdown-divider"></li>-->
                     </ul>

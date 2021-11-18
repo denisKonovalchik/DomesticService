@@ -26,10 +26,10 @@
                         <li class="list-group-item" style="text-align: center "  >
                             <a href="/guest/authorization">Authorization</a>
                         </li>
-                        <li   th:if="${#strings.contains(#authentication.principal ,'USER') }" style="text-align: center"  class="list-group-item">
+                        <li   th:if="${#strings.contains(#authentication.principal ,'ROLE_USER') }" style="text-align: center"  class="list-group-item">
                             <a href="/user/userAccount/getTask">My account</a>
                         </li>
-                        <li th:if="${#strings.contains(#authentication.principal ,'EXECUTOR') }" style="text-align: center"   class="list-group-item">
+                        <li th:if="${#strings.contains(#authentication.principal ,'ROLE_EXECUTOR') }" style="text-align: center"   class="list-group-item">
                             <a  href="/executor/executorAccount/getTask">My account</a>
                        </li>
                     </ul>

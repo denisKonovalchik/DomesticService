@@ -14,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 
+
+
 @Profile("Production")
 @EnableWebSecurity
 @Configuration
@@ -40,8 +42,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .failureHandler(authenticationFailureHandler())
                 .and()
                 .logout().permitAll();
-                 http.csrf().disable();
-        http.headers().frameOptions().disable();
+//                 http.csrf().disable();
+//        http.headers().frameOptions().disable();
     }
 
 
