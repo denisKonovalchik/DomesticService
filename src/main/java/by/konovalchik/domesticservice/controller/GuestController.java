@@ -7,6 +7,7 @@ import by.konovalchik.domesticservice.service.UserService;
 import by.konovalchik.domesticservice.entity.User;
 import by.konovalchik.domesticservice.utils.ControllerMessageManager;
 import by.konovalchik.domesticservice.utils.ConverterDTO;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 
 import java.util.Arrays;
+
 
 @Controller
 @RequestMapping("/guest")
