@@ -23,6 +23,7 @@ public class LogAspect {
 
 
 
+
     @Pointcut(value = "execution(public * by.konovalchik.domesticservice.controller.GuestController.registration(..)) && args(userDTO,..) ")
     public void registrationUser(AllArgUserDTO userDTO){}
 
