@@ -23,8 +23,7 @@ public class LogAspect {
 
 
 
-
-    @Pointcut(value = "execution(public * by.konovalchik.domesticservice.controller.GuestController.registration(..)) && args(userDTO) ", argNames = "userDTO")
+    @Pointcut(value = "execution(public * by.konovalchik.domesticservice.controller.GuestController.registration(..)) && args(userDTO,..) ")
     public void registrationUser(AllArgUserDTO userDTO){}
 
 
@@ -38,7 +37,7 @@ public class LogAspect {
 
 
 
-    @Pointcut(value = "execution(public * by.konovalchik.domesticservice.service.UserService.loadUserByUsername(..)) && args(username,..) ", argNames = "username")
+    @Pointcut(value = "execution(public * by.konovalchik.domesticservice.service.UserService.loadUserByUsername(..)) && args(username,..) ")
     public void authUser(String username){}
 
 
@@ -55,7 +54,7 @@ public class LogAspect {
 
 
 
-    @Pointcut(value = "execution(public * by.konovalchik.domesticservice.controller.UserTaskController.createTask(..)) && args(allArgsTaskDTO) ")
+    @Pointcut(value = "execution(public * by.konovalchik.domesticservice.controller.UserTaskController.createTask(..)) && args(allArgsTaskDTO,..) ")
     public void crTask(AllArgsTaskDTO allArgsTaskDTO){}
 
 
@@ -69,7 +68,7 @@ public class LogAspect {
 
 
 
-    @Pointcut(value = "execution(public * by.konovalchik.domesticservice.controller.UserTaskController.deleteTask(..)) && args(id) ")
+    @Pointcut(value = "execution(public * by.konovalchik.domesticservice.controller.UserTaskController.deleteTask(..)) && args(id,..) ")
     public void delTask(long id){}
 
 
