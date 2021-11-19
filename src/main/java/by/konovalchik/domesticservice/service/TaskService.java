@@ -287,7 +287,7 @@ public class TaskService {
     }
 
 
-    public boolean closeTask(User user, long taskId){
+    public boolean closeTask(long taskId, User user){
         Optional<Task> taskOpt = taskRepository.findById(taskId);
         if(taskOpt.isPresent()){
             Task task = taskOpt.get();

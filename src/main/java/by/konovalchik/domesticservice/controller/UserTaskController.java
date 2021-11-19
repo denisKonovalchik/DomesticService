@@ -92,7 +92,7 @@ public class UserTaskController {
         modelAndView.addObject("gradeDTO", new GradeDTO());
         modelAndView.setViewName("taskToCompleted");
         User user = userService.getCurrentUser();
-        if(taskService.closeTask(user, id)){
+        if(taskService.closeTask(id, user)){
             modelAndView.addObject("messageTaskCompleted1", ControllerMessageManager.CLOSE_TASK_SUCCESSFULLY);
         }else{
             modelAndView.addObject("messageTaskCompleted2", ControllerMessageManager.CLOSE_TASK_FAIL);
