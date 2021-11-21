@@ -131,7 +131,7 @@ public class ConverterDTO {
             User userUser = userExOpt.get();
             return TaskUserDTO.builder()
                     .task(task)
-                    .user(User.builder().id(userUser.getId()).username(userUser.getUsername()).build())
+                    .user(User.builder().id(userUser.getId()).username(userUser.getUsername()).rating(userUser.getRating()).build())
                     .createdTime(time)
                     .build();
         }

@@ -49,7 +49,11 @@
                             </li>
                             <li class="list-group-item" th:if="${taskDTO.user.id != 0}">
                                 <span>customer: </span>
-                                <a class="card-link" th:href="@{/userInfo/getUserById/{id} (id=${taskDTO.user.id})}"> <span th:text="${taskDTO.user.username}"></span></a>
+                                    <span th:if="${taskDTO.task.status.name() == 'ACTIVE' }"   >
+                                        <span th:text="${taskDTO.user.username}"></span>
+                                        <b> <span th:text="${taskDTO.user.rating.score}">   </span></b><img src="/images/starNew.png" style="max-height: 16px; margin-bottom: 3px" alt="">
+                                    </span>
+                                    <a th:if="${taskDTO.task.status.name() != 'ACTIVE' }" class="card-link" th:href="@{/userInfo/getUserById/{id} (id=${taskDTO.user.id})}"> <span th:text="${taskDTO.user.username}"></span></a>
                             </li>
                         </ul>
                         <div class="card-body">
