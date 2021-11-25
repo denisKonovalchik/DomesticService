@@ -301,4 +301,8 @@ public class TaskService {
     }
 
 
+    public Optional<Task> getTaskById(long taskId){
+       return taskRepository.findTaskById(taskId);
+    }
+
 }

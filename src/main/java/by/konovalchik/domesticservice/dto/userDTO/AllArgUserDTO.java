@@ -5,6 +5,7 @@ import by.konovalchik.domesticservice.entity.Telephone;
 import by.konovalchik.domesticservice.entity.UserRating;
 import by.konovalchik.domesticservice.utils.ConstraintsMessageManager;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,9 +19,11 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 public class AllArgUserDTO {
 
 
