@@ -50,6 +50,22 @@ public class ExecutorTaskController {
 
 
 
+    @GetMapping("/getTaskStatus/{statusTask}")
+    public ModelAndView userHomeStatus(@PathVariable("statusTask") String status, ModelAndView modelAndView){
+        modelAndView.setViewName("executorAccount");
+        User user = userService.getCurrentUser();
+        Optional<List<Task>> tasks = taskService.getAllActiveAndWorkTask(user.getId());
+        if(tasks.isPresent()){
+            List<Task> tasksByStatus = taskService.sortedByStatus(tasks.get(), status );
+            List<TaskUserDTO> listTaskDTO = ConverterDTO.getListTaskExecutorCard(tasksByStatus);
+            modelAndView.addObject("listTaskEx", listTaskDTO);
+        }
+        return modelAndView;
+    }
+
+
+
+
     @GetMapping("/taskToWork/{id}")
     public ModelAndView taskToWork(@PathVariable long id, ModelAndView modelAndView){
         modelAndView.setViewName("taskToWork");

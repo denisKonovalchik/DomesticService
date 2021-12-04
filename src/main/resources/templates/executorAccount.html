@@ -22,11 +22,30 @@
             </ul>
             <ul style=" margin-top: 30px">
                 <p><b>Status</b></p>
-                <li>Active</li>
-                <li>Work</li>
-                <li>Completed</li>
-                <li>Reopen</li>
-                <li>All</li>
+                <li>
+                    <a th:href="@{/executor/executorAccount/getTaskStatus/{statusTask}  (statusTask = 'ACTIVE')}">
+                        Active
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/executor/executorAccount/getTaskStatus/{statusTask}  (statusTask = 'WORK')}">
+                        Work
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/executor/executorAccount/getTaskStatus/{statusTask}  (statusTask = 'COMPLETED')}">
+                        Completed
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/executor/executorAccount/getTaskStatus/{statusTask}  (statusTask = 'REOPEN')}">
+                        Reopen
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/executor/executorAccount/getTask}">
+                        All
+                    </a>
             </ul>
         </div>
         <div class="col-6" style="height: auto">
@@ -49,9 +68,9 @@
                             </li>
                             <li class="list-group-item" th:if="${taskDTO.user.id != 0}">
                                 <span>customer: </span>
-                                    <span th:if="${taskDTO.task.status.name() == 'ACTIVE' }"   >
+                                    <span th:if="${taskDTO.task.status.name() == 'ACTIVE' }" >
                                         <span th:text="${taskDTO.user.username}"></span>
-                                        <b> <span th:text="${taskDTO.user.rating.score}">   </span></b><img src="/images/starNew.png" style="max-height: 16px; margin-bottom: 3px" alt="">
+                                        <b style="margin-left: 5px" ><span th:text="${taskDTO.user.rating.score}"></span></b><img src="/images/starNew.png" style="max-height: 16px; margin-bottom: 3px" alt="">
                                     </span>
                                     <a th:if="${taskDTO.task.status.name() != 'ACTIVE' }" class="card-link" th:href="@{/userInfo/getUserById/{id} (id=${taskDTO.user.id})}"> <span th:text="${taskDTO.user.username}"></span></a>
                             </li>

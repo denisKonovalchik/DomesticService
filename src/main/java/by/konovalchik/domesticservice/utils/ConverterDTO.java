@@ -110,7 +110,7 @@ public class ConverterDTO {
             User userExecutor = userUsOpt.get();
             return TaskUserDTO.builder()
                     .task(task)
-                    .user(User.builder().id(userExecutor.getId()).username(userExecutor.getUsername()).build())
+                    .user(User.builder().id(userExecutor.getId()).username(userExecutor.getUsername()).rating(userExecutor.getRating()).build())
                     .createdTime(time)
                     .build();
         }

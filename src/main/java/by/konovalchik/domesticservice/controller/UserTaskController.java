@@ -8,6 +8,7 @@ import by.konovalchik.domesticservice.dto.taskDTO.*;
 import by.konovalchik.domesticservice.dto.telephoneDTO.IdNumberTelDTO;
 import by.konovalchik.domesticservice.entity.CategoryOfTask;
 import by.konovalchik.domesticservice.entity.Task;
+import by.konovalchik.domesticservice.entity.TaskStatus;
 import by.konovalchik.domesticservice.entity.User;
 import by.konovalchik.domesticservice.service.RatingService;
 import by.konovalchik.domesticservice.service.TaskService;
@@ -129,6 +130,19 @@ public class UserTaskController {
         return modelAndView;
     }
 
+
+    @GetMapping("/getTaskStatus/{statusTask}")
+    public ModelAndView userHomeStatus(@PathVariable("statusTask") String status, ModelAndView modelAndView){
+        modelAndView.setViewName("userAccount");
+        User user = userService.getCurrentUser();
+        Optional<List<Task>> tasks = taskService.getAllByUserId(user.getId());
+        if(tasks.isPresent()){
+            List<Task> tasksByStatus = taskService.sortedByStatus(tasks.get(), status );
+            List<TaskUserDTO> listTaskDTO = ConverterDTO.getListTaskUserCard(tasksByStatus);
+            modelAndView.addObject("listTask", listTaskDTO);
+        }
+        return modelAndView;
+    }
 
 
 

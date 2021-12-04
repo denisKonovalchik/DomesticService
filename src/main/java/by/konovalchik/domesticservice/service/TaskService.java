@@ -276,8 +276,8 @@ public class TaskService {
 
 
 
-    public List<Task> sortedByStatus(List<Task> taskList){
-        return taskList.stream().sorted(Comparator.comparing(Task::getStatus)).collect(Collectors.toList());
+    public List<Task> sortedByStatus(List<Task> taskList, String status){
+        return taskList.stream().filter(task -> task.getStatus().name().equals(status)).collect(Collectors.toList());
     }
 
 

@@ -32,9 +32,9 @@ public class LogAspect {
     @AfterReturning(value = "registrationUser(userDTO)", returning = "modelAndView", argNames = "modelAndView,userDTO")
     public void regUser(ModelAndView modelAndView, AllArgUserDTO userDTO){
         if(modelAndView.isEmpty()) {
-            logger.info("Registered new user {}!", userDTO.getUsername());
+            logger.warn("Failed username {} registration attempt", userDTO.getUsername() );
         }else{
-            logger.warn("failed username {} registration attempt", userDTO.getUsername() );
+            logger.info("Registered new user {}!", userDTO.getUsername());
         }
     }
 
