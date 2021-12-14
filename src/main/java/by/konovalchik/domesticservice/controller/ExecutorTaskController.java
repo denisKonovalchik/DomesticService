@@ -40,7 +40,7 @@ public class ExecutorTaskController {
     public ModelAndView userHome(ModelAndView modelAndView){
         modelAndView.setViewName("executorAccount");
         User user = userService.getCurrentUser();
-        Optional<List<Task>> tasks = taskService.getAllActiveAndWorkTask(user.getId());
+        Optional<List<Task>> tasks = taskService.getAllByUserIdOrStatus(user.getId(), "ACTIVE");
         if(tasks.isPresent()){
             List<TaskUserDTO> listTaskDTO = ConverterDTO.getListTaskExecutorCard(tasks.get());
             modelAndView.addObject("listTaskEx", listTaskDTO);
@@ -54,15 +54,13 @@ public class ExecutorTaskController {
     public ModelAndView userHomeStatus(@PathVariable("statusTask") String status, ModelAndView modelAndView){
         modelAndView.setViewName("executorAccount");
         User user = userService.getCurrentUser();
-        Optional<List<Task>> tasks = taskService.getAllActiveAndWorkTask(user.getId());
+        Optional<List<Task>> tasks = taskService.getAllByExecutorIdAndStatus(user.getId(), status);
         if(tasks.isPresent()){
-            List<Task> tasksByStatus = taskService.sortedByStatus(tasks.get(), status );
-            List<TaskUserDTO> listTaskDTO = ConverterDTO.getListTaskExecutorCard(tasksByStatus);
+            List<TaskUserDTO> listTaskDTO = ConverterDTO.getListTaskExecutorCard(tasks.get());
             modelAndView.addObject("listTaskEx", listTaskDTO);
         }
         return modelAndView;
     }
-
 
 
 
@@ -107,8 +105,6 @@ public class ExecutorTaskController {
         }
         return modelAndView;
     }
-
-
 
 
 }

@@ -15,12 +15,20 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
 
     @Query(value = " SELECT tu.task_id FROM users_tasks tu WHERE tu.user_id = ?1 ", nativeQuery=true)
-    List<Long> findAllIdByUserId(long userId);
+    Optional<List<Long>> findAllIdByUserId(long userId);
 
 
     @Query(value=" FROM Task t WHERE t.status = ?1 ")
     Optional<List<Task>> findAllByStatus(TaskStatus status);
 
+    @Query(value="FROM Task t WHERE t.id IN ?1 ")
+    Optional<List<Task>> findAllByListId(List<Long> tasksId);
+
+    @Query(value="FROM Task t WHERE t.id IN ?1 AND t.status = ?2 ")
+    Optional<List<Task>> findAllByListIdAndStatus(List<Long> tasksId, TaskStatus status);
+
+    @Query(value="FROM Task t WHERE t.id IN ?1 OR t.status = ?2 ")
+    Optional<List<Task>> findAllByListIdOrStatus(List<Long> tasksId, TaskStatus status );
 
     Optional<List<Task>> findAllByCategory(CategoryOfTask category);
 

@@ -117,7 +117,6 @@ public class UserTaskController {
 
 
 
-
     @GetMapping("/getTask")
     public ModelAndView userHome(ModelAndView modelAndView){
         modelAndView.setViewName("userAccount");
@@ -135,10 +134,9 @@ public class UserTaskController {
     public ModelAndView userHomeStatus(@PathVariable("statusTask") String status, ModelAndView modelAndView){
         modelAndView.setViewName("userAccount");
         User user = userService.getCurrentUser();
-        Optional<List<Task>> tasks = taskService.getAllByUserId(user.getId());
+        Optional<List<Task>> tasks = taskService.getAllByUserIdAndStatus(user.getId(), status);
         if(tasks.isPresent()){
-            List<Task> tasksByStatus = taskService.sortedByStatus(tasks.get(), status );
-            List<TaskUserDTO> listTaskDTO = ConverterDTO.getListTaskUserCard(tasksByStatus);
+            List<TaskUserDTO> listTaskDTO = ConverterDTO.getListTaskUserCard(tasks.get());
             modelAndView.addObject("listTask", listTaskDTO);
         }
         return modelAndView;
@@ -277,8 +275,6 @@ public class UserTaskController {
         }
         return modelAndView;
     }
-
-
 
 
 

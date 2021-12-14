@@ -242,49 +242,55 @@ public class TaskService {
 
 
 
-    public Optional<List<Task>> getTaskByStatus(TaskStatus status ){
-        return  taskRepository.findAllByStatus(status);
-
-    }
-
-
     public Optional<List<Task>> getAllByUserId(long userId){
-            List<Long> tasksId = taskRepository.findAllIdByUserId(userId);
-            if (tasksId.isEmpty()) {
-                return Optional.empty();
+            Optional<List<Long>> tasksId = taskRepository.findAllIdByUserId(userId);
+            if (tasksId.isPresent()) {
+                return taskRepository.findAllByListId(tasksId.get());
             } else {
-                List<Task> tasks = new ArrayList<>();
-                for (Long id : tasksId) {
-                    Optional<Task> taskOpt = taskRepository.findById(id);
-                    taskOpt.ifPresent(tasks::add);
-                }
-                return Optional.of(tasks);
+                return Optional.empty();
             }
     }
 
 
 
-    public Optional<List<Task>> getAllActiveAndWorkTask(long executorId){
-        Optional<List<Task>> tasksActiveOpt = taskRepository.findAllByStatus(TaskStatus.ACTIVE);
-        Optional<List<Task>> taskExecutorOpt = getAllByUserId(executorId);
-        List<Task> mainList = new ArrayList<>();
-        tasksActiveOpt.ifPresent(mainList::addAll);
-        taskExecutorOpt.ifPresent(mainList::addAll);
-        return Optional.of(mainList);
+    public Optional<List<Task>> getAllByUserIdAndStatus(long userId, String status){
+        Optional<List<Long>> tasksId = taskRepository.findAllIdByUserId(userId);
+        if(tasksId.isPresent()) {
+            TaskStatus taskStatus = TaskStatus.valueOf(status);
+            return taskRepository.findAllByListIdAndStatus(tasksId.get(), taskStatus);
+        }else{
+            return Optional.empty();
+        }
     }
 
 
 
-
-    public List<Task> sortedByStatus(List<Task> taskList, String status){
-        return taskList.stream().filter(task -> task.getStatus().name().equals(status)).collect(Collectors.toList());
+    public Optional<List<Task>> getAllByUserIdOrStatus(long userId, String status){
+        Optional<List<Long>> tasksId = taskRepository.findAllIdByUserId(userId);
+        if(tasksId.isPresent()) {
+            TaskStatus  taskStatus = TaskStatus.valueOf(status);
+            return taskRepository.findAllByListIdOrStatus(tasksId.get(), taskStatus);
+        }else{
+            return Optional.empty();
+        }
     }
 
 
-    public List<Task> sortedByTime(List<Task> taskList){
-        return taskList.stream().sorted(Comparator.comparing(Task::getLocalDateTime)).collect(Collectors.toList());
-
+    public Optional<List<Task>> getAllByExecutorIdAndStatus(long executorId, String status){
+        Optional<List<Long>> tasksId = taskRepository.findAllIdByUserId(executorId);
+        if(tasksId.isPresent()) {
+            TaskStatus  taskStatus = TaskStatus.valueOf(status);
+            if(taskStatus.name().equals("ACTIVE")){
+                return taskRepository.findAllByStatus(TaskStatus.ACTIVE);
+            }else{
+                return taskRepository.findAllByListIdAndStatus(tasksId.get(), taskStatus);
+            }
+        }else{
+            return Optional.empty();
+        }
     }
+
+
 
 
     public boolean closeTask(long taskId, User user){
