@@ -3,6 +3,7 @@ package by.konovalchik.domesticservice.controller;
 
 import by.konovalchik.domesticservice.dto.cardDTO.TaskUserDTO;
 import by.konovalchik.domesticservice.dto.gradeDTO.GradeDTO;
+import by.konovalchik.domesticservice.entity.CategoryOfTask;
 import by.konovalchik.domesticservice.entity.Task;
 import by.konovalchik.domesticservice.entity.TaskStatus;
 import by.konovalchik.domesticservice.entity.User;
@@ -61,6 +62,21 @@ public class ExecutorTaskController {
         }
         return modelAndView;
     }
+
+
+
+    @GetMapping("/getTaskCategory/{categoryTask}")
+    public ModelAndView userHomeCategory(@PathVariable("categoryTask") String category, ModelAndView modelAndView){
+        modelAndView.setViewName("executorAccount");
+        User user = userService.getCurrentUser();
+        Optional<List<Task>> tasks = taskService.getAllByUserIdOrStatusAndCategory(user.getId(), "ACTIVE", category);
+        if(tasks.isPresent()){
+            List<TaskUserDTO> listTaskDTO = ConverterDTO.getListTaskExecutorCard(tasks.get());
+            modelAndView.addObject("listTaskEx", listTaskDTO);
+        }
+        return modelAndView;
+    }
+
 
 
 

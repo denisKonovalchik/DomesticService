@@ -144,6 +144,18 @@ public class UserTaskController {
 
 
 
+    @GetMapping("/getTaskCategory/{categoryTask}")
+    public ModelAndView userHomeCategory(@PathVariable("categoryTask") String category, ModelAndView modelAndView){
+        modelAndView.setViewName("userAccount");
+        User user = userService.getCurrentUser();
+        Optional<List<Task>> tasks = taskService.getAllByUserIdAndCategory(user.getId(), category);
+        if(tasks.isPresent()){
+            List<TaskUserDTO> listTaskDTO = ConverterDTO.getListTaskUserCard(tasks.get());
+            modelAndView.addObject("listTask", listTaskDTO);
+        }
+        return modelAndView;
+    }
+
 
     @GetMapping("/updateTaskCategory/{id}")
     public ModelAndView updateTaskCategory(@PathVariable long id, ModelAndView modelAndView){

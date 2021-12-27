@@ -265,6 +265,19 @@ public class TaskService {
 
 
 
+    public Optional<List<Task>> getAllByUserIdAndCategory(long userId, String category){
+        Optional<List<Long>> tasksId = taskRepository.findAllIdByUserId(userId);
+        if(tasksId.isPresent()) {
+            CategoryOfTask taskCategory = CategoryOfTask.valueOf(category);
+            return taskRepository.findAllByListIdAndCategory(tasksId.get(), taskCategory);
+        }else{
+            return Optional.empty();
+        }
+    }
+
+
+
+
     public Optional<List<Task>> getAllByUserIdOrStatus(long userId, String status){
         Optional<List<Long>> tasksId = taskRepository.findAllIdByUserId(userId);
         if(tasksId.isPresent()) {
@@ -274,6 +287,20 @@ public class TaskService {
             return Optional.empty();
         }
     }
+
+
+    public Optional<List<Task>> getAllByUserIdOrStatusAndCategory(long userId, String status, String category){
+        Optional<List<Long>> tasksId = taskRepository.findAllIdByUserId(userId);
+        if(tasksId.isPresent()) {
+            TaskStatus  taskStatus = TaskStatus.valueOf(status);
+            CategoryOfTask taskCategory = CategoryOfTask.valueOf(category);
+            return taskRepository.findAllByListIdOrStatusCategory(tasksId.get(), taskStatus, taskCategory);
+        }else{
+            return Optional.empty();
+        }
+    }
+
+
 
 
     public Optional<List<Task>> getAllByExecutorIdAndStatus(long executorId, String status){

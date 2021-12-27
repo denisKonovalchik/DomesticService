@@ -27,8 +27,14 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     @Query(value="FROM Task t WHERE t.id IN ?1 AND t.status = ?2 ")
     Optional<List<Task>> findAllByListIdAndStatus(List<Long> tasksId, TaskStatus status);
 
+    @Query(value="FROM Task t WHERE t.id IN ?1 AND t.category = ?2 ")
+    Optional<List<Task>> findAllByListIdAndCategory(List<Long> tasksId, CategoryOfTask category);
+
     @Query(value="FROM Task t WHERE t.id IN ?1 OR t.status = ?2 ")
     Optional<List<Task>> findAllByListIdOrStatus(List<Long> tasksId, TaskStatus status );
+
+    @Query(value="FROM Task t WHERE (t.id IN ?1 OR t.status = ?2 ) AND t.category = ?3 ")
+    Optional<List<Task>> findAllByListIdOrStatusCategory(List<Long> tasksId, TaskStatus status, CategoryOfTask category );
 
     Optional<List<Task>> findAllByCategory(CategoryOfTask category);
 

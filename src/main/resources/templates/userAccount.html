@@ -18,13 +18,40 @@
         <div class="col-2" style="text-align: left; height: auto; border-right: solid #6a777a 1px">
             <ul   style=" margin-top: 40px">
                 <p><b>Category</b></p>
-                <li>Electrician</li>
-                <li>Plumbing</li>
-                <li>Furniture</li>
-                <li>Moving</li>
-                <li>Cleaning</li>
-                <li>DIY</li>
-                <li>Other</li>
+                <li>
+                    <a th:href="@{/user/userAccount/getTaskCategory/{categoryTask}  (categoryTask = 'ELECTRICIAN')}">
+                        Electrician
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/user/userAccount/getTaskCategory/{categoryTask}  (categoryTask = 'PLUMBING')}">
+                        Plumbing
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/user/userAccount/getTaskCategory/{categoryTask}  (categoryTask = 'FURNITURE')}">
+                        Furniture
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/user/userAccount/getTaskCategory/{categoryTask}  (categoryTask = 'MOVING')}">
+                        Moving
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/user/userAccount/getTaskCategory/{categoryTask}  (categoryTask = 'CLEANING')}">
+                        Cleaning
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/user/userAccount/getTaskCategory/{categoryTask}  (categoryTask = 'OTHER')}">
+                        Other
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/user/userAccount/getTask}">
+                        All
+                    </a>
             </ul>
             <ul style=" margin-top: 30px">
                 <p><b>Status</b></p>
