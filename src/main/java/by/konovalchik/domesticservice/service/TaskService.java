@@ -277,7 +277,6 @@ public class TaskService {
 
 
 
-
     public Optional<List<Task>> getAllByUserIdOrStatus(long userId, String status){
         Optional<List<Long>> tasksId = taskRepository.findAllIdByUserId(userId);
         if(tasksId.isPresent()) {
