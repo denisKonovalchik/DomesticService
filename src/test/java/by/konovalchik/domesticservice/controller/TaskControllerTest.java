@@ -8,6 +8,7 @@ import by.konovalchik.domesticservice.service.RatingService;
 import by.konovalchik.domesticservice.service.TaskService;
 import by.konovalchik.domesticservice.service.UserService;
 import by.konovalchik.domesticservice.utils.ConverterDTO;
+import net.minidev.json.JSONUtil;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -69,6 +70,8 @@ public class TaskControllerTest {
         Task task = ConverterDTO.getAllArgsTaskDTO(taskDTO);
         User userBase= (User)userService.loadUserByUsername("userUser");
         taskService.createTask(task, userBase);
+
+
     }
 
 
@@ -79,6 +82,7 @@ public class TaskControllerTest {
         Optional<List<Task>> tasks = taskService.getAllByUserId(user.getId());
 
         assertTrue(tasks.isPresent());
+        assertEquals(1, tasks.get().size());
 
     }
 
@@ -109,8 +113,8 @@ public class TaskControllerTest {
 
      @Test
     void updateTaskCategoryTest(){
-        taskService.updateCategory(1, CategoryOfTask.OTHER);
-        Optional<Task> taskOpt = taskService.getTaskById(1);
+        taskService.updateCategory(3, CategoryOfTask.OTHER);
+        Optional<Task> taskOpt = taskService.getTaskById(3);
          taskOpt.ifPresent(task -> assertEquals(CategoryOfTask.OTHER, task.getCategory()));
     }
 
@@ -130,9 +134,16 @@ public class TaskControllerTest {
                 .house(house)
                 .apartment(apartment)
                 .build();
-        taskService.updateAddress(1, addressTask);
-        Optional<Task> taskOpt = taskService.getTaskById(1);
+        taskService.updateAddress(3, addressTask);
+        Optional<Task> taskOpt = taskService.getTaskById(3);
         taskOpt.ifPresent(task -> assertEquals(task.getAddressTask().getStreet(), street));
     }
+
+
+    @AfterAll
+    void deleteUserByUsername(){
+        userService.delete("userUser");
+    }
+
 
 }

@@ -45,6 +45,18 @@ public class UserService implements UserDetailsService {
     }
 
 
+
+    public boolean delete(String userName){
+            Optional<User> userOpt = userRepository.findByUsername(userName);
+            if (userOpt.isPresent()) {
+                userRepository.delete(userOpt.get());
+                return true;
+            }
+            return  false;
+    }
+
+
+
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         Optional<User> byUsername = userRepository.findByUsername(s);
