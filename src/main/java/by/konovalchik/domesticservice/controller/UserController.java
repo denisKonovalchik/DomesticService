@@ -53,6 +53,7 @@ public class UserController {
     }
 
 
+
     @PostMapping("/updFirstName")
     public ModelAndView updateFirstName(@Valid @ModelAttribute("userNameDTO") FirstNameUserDTO firstNameDTO,
                                         BindingResult bindingResult, ModelAndView modelAndView) {
@@ -74,13 +75,13 @@ public class UserController {
 
 
 
-
     @GetMapping("/updLastName")
     public ModelAndView updateLastName(ModelAndView modelAndView) {
         modelAndView.setViewName("updLastName");
         modelAndView.addObject("userLastNameDTO", new LastNameUserDTO());
         return modelAndView;
     }
+
 
 
     @PostMapping("/updLastName")
@@ -102,12 +103,14 @@ public class UserController {
     }
 
 
+
     @GetMapping("/updPicture")
     public ModelAndView updatePicture(ModelAndView modelAndView) {
         modelAndView.setViewName("updPicture");
         modelAndView.addObject("userPictureDTO", new EmailUserDTO());
         return modelAndView;
     }
+
 
 
     @PostMapping("/updPicture")
@@ -136,6 +139,7 @@ public class UserController {
         modelAndView.addObject("userTelephoneDTO", new NumberTelDTO());
         return modelAndView;
     }
+
 
 
     @PostMapping("/updTelephone")

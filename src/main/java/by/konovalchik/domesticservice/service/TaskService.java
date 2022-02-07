@@ -32,7 +32,6 @@ public class TaskService {
 
 
 
-
     public boolean createTask(Task task, User user) {
            if(user.getRoles().contains(Role.ROLE_USER)) {
                List<User> users = new ArrayList<>();
@@ -43,6 +42,7 @@ public class TaskService {
            }
         return false;
     }
+
 
 
     public boolean delete(User user, long taskId) {
@@ -147,7 +147,6 @@ public class TaskService {
 
 
 
-
     public boolean updateCategory(long taskId, CategoryOfTask newCategory){
         Optional<Task> taskOpt = taskRepository.findById(taskId);
         if(taskOpt.isPresent()){
@@ -196,7 +195,6 @@ public class TaskService {
         }
         return false;
     }
-
 
 
 
@@ -288,6 +286,7 @@ public class TaskService {
     }
 
 
+
     public Optional<List<Task>> getAllByUserIdOrStatusAndCategory(long userId, String status, String category){
         Optional<List<Long>> tasksId = taskRepository.findAllIdByUserId(userId);
         if(tasksId.isPresent()) {
@@ -333,8 +332,11 @@ public class TaskService {
     }
 
 
+
     public Optional<Task> getTaskById(long taskId){
        return taskRepository.findTaskById(taskId);
     }
+
+
 
 }

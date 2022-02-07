@@ -43,8 +43,6 @@ public class UserTaskController {
 
 
 
-
-
     @GetMapping("/createTask")
     public ModelAndView createTask(ModelAndView modelAndView){
         modelAndView.setViewName("createTask");

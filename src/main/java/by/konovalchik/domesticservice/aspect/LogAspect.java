@@ -22,11 +22,11 @@ public class LogAspect {
      private final Logger logger = LoggerFactory.getLogger(LogAspect.class.getName());
 
 
-
 //-------Guest-------
 
     @Pointcut(value = "execution(public * by.konovalchik.domesticservice.controller.GuestController.registration(..)) && args(userDTO,..) ")
     public void registrationUser(AllArgUserDTO userDTO){}
+
 
 
     @AfterReturning(value = "registrationUser(userDTO)", returning = "modelAndView", argNames = "modelAndView,userDTO")
@@ -39,8 +39,10 @@ public class LogAspect {
     }
 
 
+
     @Pointcut(value = "execution(public * by.konovalchik.domesticservice.service.UserService.loadUserByUsername(..)) && args(username,..) ")
     public void authUser(String username){}
+
 
 
     @AfterReturning(value = "authUser(username)", returning = "userDetails", argNames = "userDetails,username")
@@ -59,6 +61,7 @@ public class LogAspect {
     public void crTask(AllArgsTaskDTO allArgsTaskDTO){}
 
 
+
     @AfterReturning(value = "crTask(allArgsTaskDTO)",  argNames = "modelAndView ,allArgsTaskDTO",  returning = "modelAndView")
     public void createTask(ModelAndView modelAndView, AllArgsTaskDTO allArgsTaskDTO){
         if(modelAndView.getModel().containsKey("messageCreateTask1")) {
@@ -70,9 +73,9 @@ public class LogAspect {
 
 
 
-
     @Pointcut(value = "execution(public * by.konovalchik.domesticservice.controller.UserTaskController.deleteTask(..)) && args(id,..) ")
     public void delTask(long id){}
+
 
 
     @AfterReturning(value = "delTask(id)",  argNames = "modelAndView,id",  returning = "modelAndView")
@@ -85,8 +88,10 @@ public class LogAspect {
     }
 
 
+
     @Pointcut(value = "execution(public * by.konovalchik.domesticservice.service.TaskService.closeTask(..)) && args(id,..) ")
     public void clTask(long id){}
+
 
 
     @AfterReturning(value = "clTask(id)",  argNames = "flag,id",  returning = "flag")
@@ -99,8 +104,10 @@ public class LogAspect {
     }
 
 
+
     @Pointcut(value = "execution(public * by.konovalchik.domesticservice.service.TaskService.changeExpress(..)) && args(id,..) ")
     public void chanExpress(long id){}
+
 
 
     @AfterReturning(value = "chanExpress(id)",  argNames = "flag,id",  returning = "flag")
@@ -114,10 +121,9 @@ public class LogAspect {
 
 
 
-
-
     @Pointcut(value = "execution(public * by.konovalchik.domesticservice.service.TaskService.getTaskToWork(..)) && args(id,..) ")
     public void taskToWork(long id){}
+
 
 
     @AfterReturning(value = "taskToWork(id)",  argNames = "flag,id",  returning = "flag")
@@ -131,9 +137,9 @@ public class LogAspect {
 
 
 
-
     @Pointcut(value = "execution(public * by.konovalchik.domesticservice.controller.ExecutorTaskController.taskToDone(..)) && args(id,..) ")
     public void taskToDone(long id){}
+
 
 
     @AfterReturning(value = "taskToDone(id)",  argNames = "modelAndView,id",  returning = "modelAndView")
@@ -147,9 +153,9 @@ public class LogAspect {
 
 
 
-
     @Pointcut(value = "execution(public * by.konovalchik.domesticservice.service.RatingService.updateRatingUser(..)) && args(id,..) ")
     public void updUserRating(long id){}
+
 
 
     @AfterReturning(value = "updUserRating(id)",  argNames = "flag,id",  returning = "flag")
@@ -160,6 +166,7 @@ public class LogAspect {
             logger.warn("The user {} has not been rated task", id);
         }
     }
+
 
 
 }

@@ -79,7 +79,6 @@ public class ExecutorTaskController {
 
 
 
-
     @GetMapping("/taskToWork/{id}")
     public ModelAndView taskToWork(@PathVariable long id, ModelAndView modelAndView){
         modelAndView.setViewName("taskToWork");

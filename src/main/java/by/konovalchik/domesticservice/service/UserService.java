@@ -68,6 +68,7 @@ public class UserService implements UserDetailsService {
     }
 
 
+
     public boolean updateUserFirstName(User user, String firstName){
         if(user.getFirstName().equals(firstName)){
             return false;
@@ -83,6 +84,7 @@ public class UserService implements UserDetailsService {
             }
         }
     }
+
 
 
     public boolean updateUserLastName(User user, String lastName){
@@ -102,6 +104,7 @@ public class UserService implements UserDetailsService {
     }
 
 
+
     public boolean updateUserPicture(User user, String picture){
         if(user.getPicture().equals(picture)){
             return false;
@@ -117,6 +120,7 @@ public class UserService implements UserDetailsService {
             }
         }
     }
+
 
 
     public boolean updateUserPassword(String oldPassword, String newPassword, String confirmPassword, User user){
@@ -168,9 +172,10 @@ public class UserService implements UserDetailsService {
 
 
 
-
     private boolean checkPassword(String newPassword, String confirmPassword) {
         return newPassword.equals(confirmPassword);
     }
+
+
 
 }

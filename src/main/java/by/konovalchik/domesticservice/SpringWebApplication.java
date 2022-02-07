@@ -7,8 +7,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 
 
-
-
 @Configuration
 @SpringBootApplication
 public class SpringWebApplication {
@@ -18,5 +16,6 @@ public class SpringWebApplication {
         SpringApplication. run(SpringWebApplication.class, args);
 
     }
+
 
 }

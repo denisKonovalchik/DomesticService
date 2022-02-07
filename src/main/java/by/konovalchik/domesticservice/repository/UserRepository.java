@@ -16,6 +16,7 @@ public interface UserRepository  extends JpaRepository<User, Long>  {
 
     Optional<User> findByUsername(String username);
 
+
     @Query(value="SELECT * FROM users u LEFT JOIN user_roles ur ON u.id = ur.user_id WHERE u.email = ?1 AND ur.roles = ?2 ", nativeQuery=true)
     Optional<User> findByEmailAndRoles(String email, String role);
 

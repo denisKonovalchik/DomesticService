@@ -94,12 +94,10 @@ public class RatingService {
      }
 
 
+
     public Optional<UserRating> getRatingById(long id){
         return ratingRepository.findById(id);
     }
-
-
-
 
 
 

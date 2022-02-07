@@ -29,6 +29,7 @@ public class GuestController {
     private UserService userService;
 
 
+
     @GetMapping("/registration")
     public ModelAndView registration(ModelAndView modelAndView){
         modelAndView.setViewName("registration");
@@ -61,8 +62,6 @@ public class GuestController {
         modelAndView.setViewName("authorization");
         return modelAndView;
     }
-
-
 
 
 
