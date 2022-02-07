@@ -12,6 +12,7 @@ import net.minidev.json.JSONUtil;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -20,15 +21,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@Transactional
+
 public class TaskControllerTest {
 
     @Autowired
@@ -75,16 +73,20 @@ public class TaskControllerTest {
     }
 
 
-
-    @Test
-    void getTaskTest() {
-        User user= (User)userService.loadUserByUsername("userUser");
-        Optional<List<Task>> tasks = taskService.getAllByUserId(user.getId());
-
-        assertTrue(tasks.isPresent());
-        assertEquals(1, tasks.get().size());
-
+    @ParameterizedTest
+    @EnumSource(CategoryOfTask.class)
+    void categoryOfTaskDetectionTest(CategoryOfTask category){
+        assertNotNull(category);
     }
+
+
+    @ParameterizedTest
+    @EnumSource(TaskStatus.class)
+    void taskStatusDetectionTest(TaskStatus status){
+        assertNotNull(status);
+    }
+
+
 
 
 
@@ -107,6 +109,17 @@ public class TaskControllerTest {
         User userBase= (User)userService.loadUserByUsername("userUser");
 
         assertTrue(taskService.createTask(task, userBase));
+    }
+
+
+    @Test
+    void getTaskTest() {
+        User user= (User)userService.loadUserByUsername("userUser");
+        Optional<List<Task>> tasks = taskService.getAllByUserId(user.getId());
+
+        assertTrue(tasks.isPresent());
+        assertEquals(2, tasks.get().size());
+
     }
 
 
@@ -138,6 +151,10 @@ public class TaskControllerTest {
         Optional<Task> taskOpt = taskService.getTaskById(3);
         taskOpt.ifPresent(task -> assertEquals(task.getAddressTask().getStreet(), street));
     }
+
+
+
+
 
 
     @AfterAll

@@ -31,7 +31,7 @@ public class RatingService {
     private UserGradeRepository gradeRepository;
 
     @Autowired
-    TaskRepository taskRepository;
+    private TaskRepository taskRepository;
 
 
 

@@ -30,18 +30,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers( "/", "/guest/registration").permitAll()
-                .antMatchers("/executor/**").hasAnyRole("EXECUTOR")
-                .antMatchers("/user/**").hasAnyRole("USER")
-                .anyRequest().authenticated()
-                .and()
+                   .antMatchers( "/", "/guest/registration").permitAll()
+                   .antMatchers("/executor/**").hasAnyRole("EXECUTOR")
+                   .antMatchers("/user/**").hasAnyRole("USER")
+                   .anyRequest().authenticated()
+                   .and()
                 .formLogin()
-                .loginPage("/guest/authorization").permitAll()
-                .defaultSuccessUrl("/",true)
-//                .failureUrl("/login.html?error=true")
-                .failureHandler(authenticationFailureHandler())
-                .and()
-                .logout().permitAll();
+                   .loginPage("/guest/authorization").permitAll()
+                   .defaultSuccessUrl("/",true)
+//                  .failureUrl("/login.html?error=true")
+                   .failureHandler(authenticationFailureHandler())
+                   .and()
+                .logout()
+                   .permitAll();
 //                 http.csrf().disable();
 //        http.headers().frameOptions().disable();
     }
