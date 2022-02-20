@@ -17,9 +17,8 @@ public class IdNumberTelDTO {
         private long id;
 
         @NotBlank
-        @Size(min = 9, message = ConstraintsMessageManager.NUMBER_USER_ERROR)
+        @Size(min = 9, max = 15,  message = ConstraintsMessageManager.NUMBER_USER_ERROR)
         private String telephone;
-
 
 
 }

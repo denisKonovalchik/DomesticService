@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"   >
+<head>
+    <meta charset="UTF-8">
+    <title>Edit first name</title>
+</head>
+<body>
+<div th:insert="pages/fragments/header.html :: header"></div>
+<div class="" >
+    <div class="row justify-content-center" >
+        <div class="col" style="background: #f5f5f5" ></div>
+        <div class="col-8" style="height: 90vh; ">
+            <div class="col-sm-4 "  style="padding: 30px 20px 20px; border-radius:8px; background: #e3f2fd; margin-left:37%; margin-top: 40px  ">
+                <legend style="text-align: center; padding-bottom: 20px">Edit first name</legend>
+                <form th:action="@{/userInfo/updFirstName}" th:object="${userFirstNameDTO}"   method="post" >
+                    <div class="mb-3">
+                        <input type="text" th:field="*{firstName}" class="form-control"  aria-describedby="emailHelp"  placeholder="First name"/>
+                        <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+                    </div>
+                    <div style="text-align:center">
+                        <button type="submit" class="btn btn-success" style="margin-top:30px">Edit</button>
+                    </div>
+                    <div style="text-align: center; margin-top: 20px">
+                        <a  th:href="@{/userInfo/userProfile}">Return</a>
+                    </div>
+                </form>
+                <div th:if="${messageFirstName1 != null}" class="alert alert-success" role="alert" style="margin-top: 20px">
+                    <p th:text="*{messageFirstName1}"></p>
+                </div>
+                <div th:if="${messageFirstName2 != null}" class="alert alert-danger"  role="alert" style="margin-top: 20px">
+                    <p th:text="*{messageFirstName2}"></p>
+                </div>
+            </div>
+        </div>
+        <div class="col" style="background: #f5f5f5"></div>
+    </div>
+</div>
+</body>
+</html>

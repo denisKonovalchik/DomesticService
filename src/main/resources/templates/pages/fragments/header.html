@@ -29,51 +29,41 @@
                 <li  class="nav-item">
                     <a class="nav-link active" href="#"><p style="font-family: 'Berkshire Swash', cursive; margin-left: 40px"></p></a>
                 </li>
-                <li th:if="${#authorization.expression('isAnonymous()')}"  class="nav-item" >
+                <li sec:authorize="isAnonymous()"   class="nav-item" >
                     <a class="nav-link active" th:href="@{/guest/authorization}">Login</a>
                 </li>
-                <li th:if="${#authorization.expression('isAnonymous()')}" class="nav-item"  >
+                <li sec:authorize="isAnonymous()" class="nav-item"  >
                     <a class="nav-link active" th:href="@{/guest/registration}">Sign-up</a>
                 </li>
                 
                 <li class="nav-item" style="margin-left:  120px">
                     <div class="pull-right navbar-text">
-                        <a th:if="${#authorization.expression('isAuthenticated()')}" >
+                        <a sec:authorize="isAuthenticated()" >
                             <b><span sec:authentication="name" ></span></b>
                         </a>
-                        <a th:if="${#authorization.expression('isAnonymous()')}" >
+                        <a sec:authorize="isAnonymous()" >
                             <span>Guest</span>
                             <img src="/images/avatar_circle.jpg" width="30px" height="30px" style="border-radius: 100px" alt="">
                         </a>
-                        <a th:if="${#strings.contains(#authentication.principal ,'ROLE_USER')}" >
+                        <a sec:authorize="hasRole('ROLE_USER')" >
                             <span>(role: user)</span>
                         </a>
-                        <a th:if="${#strings.contains(#authentication.principal ,'ROLE_EXECUTOR')}" >
+                        <a  sec:authorize="hasRole('ROLE_EXECUTOR')" >
                             <span>(role: executor)</span>
                         </a>
                     </div>
                 </li>
-                <li th:if="${#strings.contains(#authentication.principal ,'ROLE_USER')}"  class="nav-item dropdown" style=" padding-left: 10px">
+                <li sec:authorize="isAuthenticated()"  class="nav-item dropdown" style=" padding-left: 10px">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
                         <img src="/images/avatar_circle.jpg" width="30px" height="30px" style="border-radius: 100px" alt="">
                     </a>
                     <ul class="dropdown-menu">
-<!--                        <li><a class="dropdown-item" th:href="@{}">Profile</a></li>-->
+                        <li><a class="dropdown-item" th:href="@{/userInfo/userProfile}">Profile</a></li>
 <!--                        <li><a class="dropdown-item" href="#">Something else here</a></li>-->
 <!--                        <li><hr class="dropdown-divider"></li>-->
                     </ul>
                 </li>
-                <li th:if="${#strings.contains(#authentication.principal ,'ROLE_EXECUTOR')}" class="nav-item dropdown" style=" padding-left: 10px">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"   href="#"  role="button"  aria-expanded="false">
-                        <img src="/images/avatar_circle.jpg" width="30px" height="30px" style="border-radius: 100px" alt="">
-                    </a>
-                    <ul class="dropdown-menu" >
-<!--                        <li><a class="dropdown-item" th:href="@{}">Profile</a></li>-->
-<!--                        <li><a class="dropdown-item" href="#">Something else here</a></li>-->
-<!--                        <li><hr class="dropdown-divider"></li>-->
-                    </ul>
-                </li>
-                <li th:if="${#authorization.expression('isAuthenticated()')}" style="margin-left: 20px; margin-top: 7px"  >
+                <li sec:authorize="isAuthenticated()" style="margin-left: 20px; margin-top: 7px"  >
                     <form th:action="@{/logout}" method="post">
                         <button  class="btn btn-outline-secondary btn-sm " >Logout</button>
                     </form>

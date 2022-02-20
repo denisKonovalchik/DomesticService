@@ -31,8 +31,24 @@ public class UserController {
 
 
 
+    @GetMapping("/userProfile")
+    public ModelAndView geCurrentUser(ModelAndView modelAndView) {
+        modelAndView.setViewName("userProfile");
+        User user = userService.getCurrentUser();
+        Optional<User> userInfoOpt = userService.getUserById(user.getId());
+        if(userInfoOpt.isPresent()){
+            UserInfoDTO userInfoDTO = ConverterDTO.getUserInfoCard(userInfoOpt.get());
+            modelAndView.addObject("userProfileDTO", userInfoDTO);
+        }else{
+            modelAndView.addObject("messageUserProfile", ControllerMessageManager.USER_NOT_FOUND);
+        }
+        return modelAndView;
+    }
+
+
+
     @GetMapping("/getUserById/{id}")
-    public ModelAndView updateFirstName(@PathVariable long id, ModelAndView modelAndView) {
+    public ModelAndView getUserById(@PathVariable long id, ModelAndView modelAndView) {
         modelAndView.setViewName("userInfo");
         Optional<User> userInfoOpt = userService.getUserById(id);
         if(userInfoOpt.isPresent()){
@@ -44,29 +60,28 @@ public class UserController {
 
 
 
-
     @GetMapping("/updFirstName")
     public ModelAndView updateFirstName(ModelAndView modelAndView) {
-        modelAndView.setViewName("updFirstName");
-        modelAndView.addObject("userNameDTO", new FirstNameUserDTO());
+        modelAndView.setViewName("updateFirstName");
+        modelAndView.addObject("userFirstNameDTO", new FirstNameUserDTO());
         return modelAndView;
     }
 
 
 
     @PostMapping("/updFirstName")
-    public ModelAndView updateFirstName(@Valid @ModelAttribute("userNameDTO") FirstNameUserDTO firstNameDTO,
+    public ModelAndView updateFirstName(@Valid @ModelAttribute("userFirstNameDTO") FirstNameUserDTO firstNameDTO,
                                         BindingResult bindingResult, ModelAndView modelAndView) {
-        modelAndView.setViewName("updFirstName");
+        modelAndView.setViewName("updateFirstName");
         if (bindingResult.hasErrors()) {
             return modelAndView;
         }else{
             User user = userService.getCurrentUser();
             if (userService.updateUserFirstName(user, firstNameDTO.getFirstName())) {
                 user.setFirstName(firstNameDTO.getFirstName());
-                modelAndView.addObject("messageFirstName", ControllerMessageManager.UPDATE_NAME_SUCCESSFULLY);
+                modelAndView.addObject("messageFirstName1", ControllerMessageManager.UPDATE_NAME_SUCCESSFULLY);
             } else {
-                modelAndView.addObject("messageFirstName", ControllerMessageManager.UPDATE_NAME_FAIL);
+                modelAndView.addObject("messageFirstName2", ControllerMessageManager.UPDATE_NAME_FAIL);
             }
         }
         return modelAndView;
@@ -74,10 +89,9 @@ public class UserController {
 
 
 
-
     @GetMapping("/updLastName")
     public ModelAndView updateLastName(ModelAndView modelAndView) {
-        modelAndView.setViewName("updLastName");
+        modelAndView.setViewName("updateLastName");
         modelAndView.addObject("userLastNameDTO", new LastNameUserDTO());
         return modelAndView;
     }
@@ -87,16 +101,16 @@ public class UserController {
     @PostMapping("/updLastName")
     public ModelAndView updateLastName(@Valid @ModelAttribute("userLastNameDTO") LastNameUserDTO lastNameDTO,
                                        BindingResult bindingResult, ModelAndView modelAndView) {
-        modelAndView.setViewName("updLastName");
+        modelAndView.setViewName("updateLastName");
         if (bindingResult.hasErrors()) {
             return modelAndView;
         }else{
             User user = userService.getCurrentUser();
             if (userService.updateUserLastName(user, lastNameDTO.getLastName())) {
                 user.setLastName(lastNameDTO.getLastName());
-                modelAndView.addObject("messageLastName", ControllerMessageManager.UPDATE_LAST_NAME_SUCCESSFULLY);
+                modelAndView.addObject("messageLastName1", ControllerMessageManager.UPDATE_LAST_NAME_SUCCESSFULLY);
             } else {
-                modelAndView.addObject("messageLastName", ControllerMessageManager.UPDATE_LAST_NAME_FAIL);
+                modelAndView.addObject("messageLastName2", ControllerMessageManager.UPDATE_LAST_NAME_FAIL);
             }
         }
         return modelAndView;
@@ -106,8 +120,8 @@ public class UserController {
 
     @GetMapping("/updPicture")
     public ModelAndView updatePicture(ModelAndView modelAndView) {
-        modelAndView.setViewName("updPicture");
-        modelAndView.addObject("userPictureDTO", new EmailUserDTO());
+        modelAndView.setViewName("updatePicture");
+        modelAndView.addObject("userPictureDTO", new PictureUserDTO());
         return modelAndView;
     }
 
@@ -116,16 +130,16 @@ public class UserController {
     @PostMapping("/updPicture")
     public ModelAndView updatePicture(@Valid @ModelAttribute("userPictureDTO") PictureUserDTO pictureDTO,
                                       BindingResult bindingResult, ModelAndView modelAndView) {
-        modelAndView.setViewName("updPicture");
+        modelAndView.setViewName("updatePicture");
         if (bindingResult.hasErrors()) {
             return modelAndView;
         }else{
             User user = userService.getCurrentUser();
             if (userService.updateUserPicture(user, pictureDTO.getPicture())) {
                 user.setPicture(pictureDTO.getPicture());
-                modelAndView.addObject("messagePicture", ControllerMessageManager.UPDATE_PICTURE_SUCCESSFULLY);
+                modelAndView.addObject("messagePicture1", ControllerMessageManager.UPDATE_PICTURE_SUCCESSFULLY);
             } else {
-                modelAndView.addObject("messagePicture", ControllerMessageManager.UPDATE_PICTURE_FAIL);
+                modelAndView.addObject("messagePicture2", ControllerMessageManager.UPDATE_PICTURE_FAIL);
             }
         }
         return modelAndView;
@@ -135,7 +149,7 @@ public class UserController {
 
     @GetMapping("/updTelephone")
     public ModelAndView updateTelephone(ModelAndView modelAndView) {
-        modelAndView.setViewName("updTelephone");
+        modelAndView.setViewName("updateTelephone");
         modelAndView.addObject("userTelephoneDTO", new NumberTelDTO());
         return modelAndView;
     }
@@ -143,24 +157,51 @@ public class UserController {
 
 
     @PostMapping("/updTelephone")
-    public ModelAndView updatePicture(@Valid @ModelAttribute("userPictureDTO") NumberTelDTO numberTelDTO,
+    public ModelAndView updatePicture(@Valid @ModelAttribute("userTelephoneDTO") NumberTelDTO numberTelDTO,
                                       BindingResult bindingResult, ModelAndView modelAndView) {
-        modelAndView.setViewName("updTelephone");
+        modelAndView.setViewName("updateTelephone");
         if (bindingResult.hasErrors()) {
             return modelAndView;
         }else{
             User user = userService.getCurrentUser();
             if (userService.updateUserTelephone(user, numberTelDTO.getTelephone())) {
                 user.getTelephone().setNumber(numberTelDTO.getTelephone());
-                modelAndView.addObject("messageTelephone", ControllerMessageManager.UPDATE_NUMBER_SUCCESSFULLY);
+                modelAndView.addObject("messageTelephone1", ControllerMessageManager.UPDATE_NUMBER_SUCCESSFULLY);
             } else {
-                modelAndView.addObject("messageTelephone", ControllerMessageManager.UPDATE_NUMBER_FAIL);
+                modelAndView.addObject("messageTelephone2", ControllerMessageManager.UPDATE_NUMBER_FAIL);
             }
         }
         return modelAndView;
     }
 
 
+
+    @GetMapping("/updEmail")
+    public ModelAndView updateEmail(ModelAndView modelAndView) {
+        modelAndView.setViewName("updateEmail");
+        modelAndView.addObject("userEmailDTO", new EmailUserDTO());
+        return modelAndView;
+    }
+
+
+
+    @PostMapping("/updEmail")
+    public ModelAndView updateEmail(@Valid @ModelAttribute("userEmailDTO") EmailUserDTO emailDTO,
+                                      BindingResult bindingResult, ModelAndView modelAndView) {
+        modelAndView.setViewName("updateEmail");
+        if (bindingResult.hasErrors()) {
+            return modelAndView;
+        }else{
+            User user = userService.getCurrentUser();
+            if (userService.updateUserEmail(user, emailDTO.getEmail())) {
+                user.getTelephone().setNumber(emailDTO.getEmail());
+                modelAndView.addObject("messageEmail1", ControllerMessageManager.UPDATE_EMAIL_SUCCESSFULLY);
+            } else {
+                modelAndView.addObject("messageEmail2", ControllerMessageManager.UPDATE_EMAIL_FAIL);
+            }
+        }
+        return modelAndView;
+    }
 
 
 

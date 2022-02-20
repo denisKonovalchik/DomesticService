@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>User profile</title>
+</head>
+<body>
+<div th:insert="pages/fragments/header.html :: header"></div>
+<div class="" >
+    <div class="row justify-content-center" >
+        <div class="col" style="background: #f5f5f5" ></div>
+        <div class="col-8" style="height: auto ">
+            <div class="col-sm-4 "  style="padding: 30px 20px 20px; border-radius:8px; background: #e3f2fd; margin-left:37%; margin-top: 40px  ">
+                <legend style="text-align: center; padding-bottom: 10px">Profile</legend>
+                     <img th:if="${userProfileDTO.user.picture}" th:src="${userProfileDTO.user.picture}" alt="" class="card-img-top" style="height: 300px" >
+                     <img th:if="${userProfileDTO.user.picture == null }" src="images/avatar12.jpg" alt="" class="card-img-top" >
+                <ul class="list-group list-group-flush" style="margin-top: 5px" >
+                    <li class="list-group-item"><b>role:</b>
+                        <span sec:authorize="hasRole('ROLE_USER')"> user</span>
+                        <span sec:authorize="hasRole('ROLE_EXECUTOR')"> executor</span>
+                    </li>
+                    <li class="list-group-item"><b>username: </b><span th:text="${userProfileDTO.user.username}"></span></li>
+                    <li class="list-group-item"><b>first name: </b><span th:text="${userProfileDTO.user.firstName}"></span>
+                        <a style="float:right" th:href="@{/userInfo/updFirstName}" class="card-link">
+                            <img style="height: 20px; width: 20px" src="/images/edit.jpg">
+                        </a>
+                    </li>
+                    <li class="list-group-item"><b>last name: </b><span th:text="${userProfileDTO.user.lastName}"></span>
+                        <a style="float:right" th:href="@{/userInfo/updLastName}" class="card-link">
+                            <img style="height: 20px; width: 20px" src="/images/edit.jpg">
+                        </a>
+                    </li>
+                    <li class="list-group-item"><b>telephone: +</b><span th:text="${userProfileDTO.user.telephone.number}"></span>
+                        <a style="float:right" th:href="@{/userInfo/updTelephone}" class="card-link">
+                            <img style="height: 20px; width: 20px" src="/images/edit.jpg">
+                        </a>
+                    </li>
+                    <li class="list-group-item"><b>email: </b><span th:text="${userProfileDTO.user.email}"></span>
+                        <a style="float:right" th:href="@{/userInfo/updEmail}" class="card-link">
+                            <img style="height: 20px; width: 20px" src="/images/edit.jpg">
+                        </a>
+                    </li>
+                    <li class="list-group-item"><b>rating: </b><span th:text="${userProfileDTO.user.rating.score}"></span></li>
+                    <li class="list-group-item"><b>picture: </b>
+                        <a style="float:right" th:href="@{/userInfo/updPicture}" class="card-link">
+                            <img style="height: 20px; width: 20px" src="/images/edit.jpg">
+                        </a>
+                    </li>
+
+                </ul>
+                <div th:if="${#strings.contains(#authentication.principal ,'USER')}"  style="text-align: center; margin-top: 20px">
+                    <a th:href="@{/user/userAccount/getTask}" type="submit" class="btn btn-success">Ok</a>
+                </div>
+                <div th:if="${#strings.contains(#authentication.principal ,'EXECUTOR')}"  style="text-align: center; margin-top: 20px">
+                    <a th:href="@{/executor/executorAccount/getTask}" type="submit" class="btn btn-success">Ok</a>
+                </div>
+            </div>
+        </div>
+        <div class="col" style="background: #f5f5f5"></div>
+    </div>
+</div>
+</body>
+</html>

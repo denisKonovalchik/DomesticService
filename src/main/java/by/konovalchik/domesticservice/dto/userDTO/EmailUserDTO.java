@@ -13,8 +13,10 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @Data
 public class EmailUserDTO {
+
     @NotBlank
     @Size(min = 3, max = 30, message = ConstraintsMessageManager.EMAIL_ERROR)
     private String email;
+
 
 }

@@ -12,10 +12,12 @@ import javax.validation.constraints.Min;
 @NoArgsConstructor
 @Data
 public class RatingUserDTO {
+
     private long id;
 
     @Min(1)
     @Max(5)
     private int score;
+
 
 }

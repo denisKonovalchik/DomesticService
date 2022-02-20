@@ -18,7 +18,6 @@ import javax.validation.constraints.Size;
 @Builder
 public class AllArgsTaskDTO {
 
-
     private long id;
 
     private CategoryOfTask category;
@@ -50,7 +49,7 @@ public class AllArgsTaskDTO {
     private String apartment;
 
     @NotEmpty
-    @Size(min = 9, message = ConstraintsMessageManager.NUMBER_USER_ERROR)
+    @Size(min = 9, max= 15,  message = ConstraintsMessageManager.NUMBER_USER_ERROR)
     private String telephone;
 
 

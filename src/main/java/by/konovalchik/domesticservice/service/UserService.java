@@ -123,6 +123,24 @@ public class UserService implements UserDetailsService {
 
 
 
+    public boolean updateUserEmail(User user, String email){
+        if(user.getEmail().equals(email)){
+            return false;
+        }else {
+            Optional<User> userOpt = userRepository.findById(user.getId());
+            if (userOpt.isPresent()) {
+                User userBase = userOpt.get();
+                userBase.setEmail(email);
+                userRepository.save(userBase);
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+
+
     public boolean updateUserPassword(String oldPassword, String newPassword, String confirmPassword, User user){
         if (checkPassword(user.getPassword(), oldPassword) && !oldPassword.equals(newPassword)) {
             if (checkPassword(newPassword, confirmPassword)) {
@@ -157,6 +175,10 @@ public class UserService implements UserDetailsService {
             }
         }
     }
+
+
+
+
 
 
 

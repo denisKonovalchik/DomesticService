@@ -15,6 +15,8 @@ import javax.validation.constraints.Size;
 public class NumberTelDTO {
 
     @NotBlank
-    @Size(min = 9, message = ConstraintsMessageManager.NUMBER_USER_ERROR)
+    @Size(min = 9, max = 15 ,message = ConstraintsMessageManager.NUMBER_USER_ERROR)
     private String telephone;
+
+
 }
