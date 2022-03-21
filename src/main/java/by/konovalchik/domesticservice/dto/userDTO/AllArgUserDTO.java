@@ -4,6 +4,7 @@ import by.konovalchik.domesticservice.entity.Role;
 import by.konovalchik.domesticservice.entity.Telephone;
 import by.konovalchik.domesticservice.entity.UserRating;
 import by.konovalchik.domesticservice.utils.ConstraintsMessageManager;
+import by.konovalchik.domesticservice.utils.Patterns;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,10 +12,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -38,7 +36,7 @@ public class AllArgUserDTO {
     private String lastName;
 
     @NotBlank
-    @Size(min = 3, max = 30, message = ConstraintsMessageManager.EMAIL_ERROR)
+    @Pattern(regexp = Patterns.EMAIL, message = ConstraintsMessageManager.EMAIL_ERROR)
     private String email;
 
     @NotBlank
@@ -55,6 +53,7 @@ public class AllArgUserDTO {
 
     @NotBlank
     @Size(min = 6, max = 500, message = ConstraintsMessageManager.PASSWORD_ERROR)
+    @Pattern(regexp = Patterns.PASSWORD)
     private String password;
 
 

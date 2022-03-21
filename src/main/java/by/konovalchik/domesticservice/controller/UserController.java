@@ -2,16 +2,14 @@ package by.konovalchik.domesticservice.controller;
 
 import by.konovalchik.domesticservice.dto.cardDTO.UserInfoDTO;
 import by.konovalchik.domesticservice.dto.telephoneDTO.NumberTelDTO;
-import by.konovalchik.domesticservice.dto.userDTO.EmailUserDTO;
-import by.konovalchik.domesticservice.dto.userDTO.FirstNameUserDTO;
-import by.konovalchik.domesticservice.dto.userDTO.LastNameUserDTO;
-import by.konovalchik.domesticservice.dto.userDTO.PictureUserDTO;
+import by.konovalchik.domesticservice.dto.userDTO.*;
 import by.konovalchik.domesticservice.entity.*;
 ;
 import by.konovalchik.domesticservice.service.UserService;
 import by.konovalchik.domesticservice.utils.ControllerMessageManager;
 import by.konovalchik.domesticservice.utils.ConverterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -60,6 +58,34 @@ public class UserController {
 
 
 
+    @GetMapping("/updPassword")
+    public ModelAndView updatePassword(ModelAndView modelAndView) {
+        modelAndView.setViewName("updatePassword");
+        modelAndView.addObject("userPasswordDTO", new PasswordUserDTO());
+        return modelAndView;
+    }
+
+
+
+    @PostMapping("/updPassword")
+    public ModelAndView updatePassword(@Valid @ModelAttribute("userPasswordDTO") PasswordUserDTO passwordUserDTO,
+                                        BindingResult bindingResult, ModelAndView modelAndView) {
+        modelAndView.setViewName("updatePassword");
+        if (bindingResult.hasErrors()) {
+            return modelAndView;
+        }else{
+            User user = userService.getCurrentUser();
+            if (userService.updateUserPassword(passwordUserDTO.getOldPassword(), passwordUserDTO.getConfirmPassword(), passwordUserDTO.getNewPassword(), user)) {
+                modelAndView.addObject("messagePassword1", ControllerMessageManager.UPDATE_PASSWORD_SUCCESSFULLY);
+            } else {
+                modelAndView.addObject("messagePassword2", ControllerMessageManager.UPDATE_USERNAME_FAIL);
+            }
+        }
+        return modelAndView;
+    }
+
+
+
     @GetMapping("/updFirstName")
     public ModelAndView updateFirstName(ModelAndView modelAndView) {
         modelAndView.setViewName("updateFirstName");
@@ -78,7 +104,6 @@ public class UserController {
         }else{
             User user = userService.getCurrentUser();
             if (userService.updateUserFirstName(user, firstNameDTO.getFirstName())) {
-                user.setFirstName(firstNameDTO.getFirstName());
                 modelAndView.addObject("messageFirstName1", ControllerMessageManager.UPDATE_NAME_SUCCESSFULLY);
             } else {
                 modelAndView.addObject("messageFirstName2", ControllerMessageManager.UPDATE_NAME_FAIL);
@@ -107,7 +132,6 @@ public class UserController {
         }else{
             User user = userService.getCurrentUser();
             if (userService.updateUserLastName(user, lastNameDTO.getLastName())) {
-                user.setLastName(lastNameDTO.getLastName());
                 modelAndView.addObject("messageLastName1", ControllerMessageManager.UPDATE_LAST_NAME_SUCCESSFULLY);
             } else {
                 modelAndView.addObject("messageLastName2", ControllerMessageManager.UPDATE_LAST_NAME_FAIL);
@@ -136,7 +160,6 @@ public class UserController {
         }else{
             User user = userService.getCurrentUser();
             if (userService.updateUserPicture(user, pictureDTO.getPicture())) {
-                user.setPicture(pictureDTO.getPicture());
                 modelAndView.addObject("messagePicture1", ControllerMessageManager.UPDATE_PICTURE_SUCCESSFULLY);
             } else {
                 modelAndView.addObject("messagePicture2", ControllerMessageManager.UPDATE_PICTURE_FAIL);
@@ -165,7 +188,6 @@ public class UserController {
         }else{
             User user = userService.getCurrentUser();
             if (userService.updateUserTelephone(user, numberTelDTO.getTelephone())) {
-                user.getTelephone().setNumber(numberTelDTO.getTelephone());
                 modelAndView.addObject("messageTelephone1", ControllerMessageManager.UPDATE_NUMBER_SUCCESSFULLY);
             } else {
                 modelAndView.addObject("messageTelephone2", ControllerMessageManager.UPDATE_NUMBER_FAIL);
@@ -194,7 +216,6 @@ public class UserController {
         }else{
             User user = userService.getCurrentUser();
             if (userService.updateUserEmail(user, emailDTO.getEmail())) {
-                user.getTelephone().setNumber(emailDTO.getEmail());
                 modelAndView.addObject("messageEmail1", ControllerMessageManager.UPDATE_EMAIL_SUCCESSFULLY);
             } else {
                 modelAndView.addObject("messageEmail2", ControllerMessageManager.UPDATE_EMAIL_FAIL);
@@ -202,7 +223,6 @@ public class UserController {
         }
         return modelAndView;
     }
-
 
 
 }

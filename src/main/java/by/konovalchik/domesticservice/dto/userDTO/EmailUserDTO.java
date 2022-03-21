@@ -1,11 +1,13 @@
 package by.konovalchik.domesticservice.dto.userDTO;
 
 import by.konovalchik.domesticservice.utils.ConstraintsMessageManager;
+import by.konovalchik.domesticservice.utils.Patterns;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 
@@ -15,7 +17,7 @@ import javax.validation.constraints.Size;
 public class EmailUserDTO {
 
     @NotBlank
-    @Size(min = 3, max = 30, message = ConstraintsMessageManager.EMAIL_ERROR)
+    @Pattern(regexp = Patterns.EMAIL, message = ConstraintsMessageManager.EMAIL_ERROR)
     private String email;
 
 

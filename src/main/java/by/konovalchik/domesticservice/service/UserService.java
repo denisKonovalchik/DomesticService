@@ -142,12 +142,12 @@ public class UserService implements UserDetailsService {
 
 
     public boolean updateUserPassword(String oldPassword, String newPassword, String confirmPassword, User user){
-        if (checkPassword(user.getPassword(), oldPassword) && !oldPassword.equals(newPassword)) {
+        if (passwordEncoder.matches(oldPassword, user.getPassword()) && !checkPassword(oldPassword, newPassword)) {
             if (checkPassword(newPassword, confirmPassword)) {
                     Optional<User> userOpt = userRepository.findById(user.getId());
                     if (userOpt.isPresent()) {
                         User userBase = userOpt.get();
-                        userBase.setPassword(passwordEncoder.encode(user.getPassword()));
+                        userBase.setPassword(passwordEncoder.encode(newPassword));
                         userRepository.save(userBase);
                         return true;
                     } else {
@@ -175,10 +175,6 @@ public class UserService implements UserDetailsService {
             }
         }
     }
-
-
-
-
 
 
 
