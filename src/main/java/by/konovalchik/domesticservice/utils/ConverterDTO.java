@@ -1,7 +1,8 @@
 package by.konovalchik.domesticservice.utils;
 
 import by.konovalchik.domesticservice.dto.addressDTO.AllArgsAddressDTO;
-import by.konovalchik.domesticservice.dto.cardDTO.TaskUserDTO;
+import by.konovalchik.domesticservice.dto.cardDTO.TaskCardDTO;
+import by.konovalchik.domesticservice.dto.cardDTO.UserCardDTO;
 import by.konovalchik.domesticservice.dto.cardDTO.UserInfoDTO;
 import by.konovalchik.domesticservice.dto.taskDTO.AllArgsTaskDTO;
 import by.konovalchik.domesticservice.dto.telephoneDTO.NumberTelDTO;
@@ -15,9 +16,6 @@ import java.util.*;
 
 
 public class ConverterDTO {
-
-
-
 
 
 
@@ -40,12 +38,14 @@ public class ConverterDTO {
     }
 
 
+
     public static User getUsernamePasswordUserDTO(UsernamePasswordUserDTO usernamePasswordUserDTO) {
         return User.builder()
                 .username(usernamePasswordUserDTO.getUsername())
                 .password(usernamePasswordUserDTO.getPassword())
                 .build();
     }
+
 
 
     public static Telephone getTelDTO(NumberTelDTO numberTelDTO) {
@@ -55,11 +55,13 @@ public class ConverterDTO {
     }
 
 
+
     public static Telephone getTelDTO(String number) {
         return Telephone.builder()
                 .number(number)
                 .build();
     }
+
 
 
     public static Task getAllArgsTaskDTO(AllArgsTaskDTO taskDTO){
@@ -96,67 +98,51 @@ public class ConverterDTO {
                                                          .picture(user.getPicture())
                                                          .build())
                                                          .build();
-
     }
 
 
 
-
-    public static TaskUserDTO getTaskUserCard(Task task) {
+    public static TaskCardDTO getTaskUserCard(Task task, long userId) {
         DateTimeFormatter format = DateTimeFormatter.ofPattern(Patterns.TIME_FORMAT);
         String time = task.getLocalDateTime().format(format);
-        Optional<User> userUsOpt = task.getUsers().stream().filter(user -> user.getRoles().contains(Role.ROLE_EXECUTOR)).findFirst();
-        if (userUsOpt.isPresent()) {
-            User userExecutor = userUsOpt.get();
-            return TaskUserDTO.builder()
-                    .task(task)
-                    .user(User.builder().id(userExecutor.getId()).username(userExecutor.getUsername()).rating(userExecutor.getRating()).build())
-                    .createdTime(time)
-                    .build();
+        Optional<User> userOpt = task.getUsers().stream().filter(user -> user.getId() != userId ).findFirst();
+        Task taskDTO = Task.builder()
+                                     .id(task.getId())
+                                     .name(task.getName())
+                                     .description(task.getDescription())
+                                     .addressTask(task.getAddressTask())
+                                     .telephoneTask(task.getTelephoneTask())
+                                     .status(task.getStatus())
+                                     .express(task.isExpress())
+                                     .category(task.getCategory())
+                                     .price(task.getPrice())
+                                     .localDateTime(task.getLocalDateTime())
+                                     .build();
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            return TaskCardDTO.builder()
+                                       .task(taskDTO)
+                                       .userCardDTO(UserCardDTO.builder()
+                                                           .id(user.getId())
+                                                           .username(user.getUsername())
+                                                           .rating(user.getRating())
+                                                           .build())
+                                       .createdTime(time)
+                                       .build();
         }
-        return TaskUserDTO.builder()
-                .task(task)
-                .user(User.builder().id(0).build())
-                .createdTime(time)
-                .build();
+        return TaskCardDTO.builder()
+                                    .task(taskDTO)
+                                    .userCardDTO(UserCardDTO.builder().id(0).build())
+                                    .createdTime(time)
+                                    .build();
     }
 
 
 
-    public static TaskUserDTO getTaskExecutorCard(Task task) {
-        DateTimeFormatter format = DateTimeFormatter.ofPattern(Patterns.TIME_FORMAT);
-        String time = task.getLocalDateTime().format(format);
-        Optional<User> userExOpt = task.getUsers().stream().filter(user -> user.getRoles().contains(Role.ROLE_USER)).findFirst();
-        if (userExOpt.isPresent()) {
-            User userUser = userExOpt.get();
-            return TaskUserDTO.builder()
-                    .task(task)
-                    .user(User.builder().id(userUser.getId()).username(userUser.getUsername()).rating(userUser.getRating()).build())
-                    .createdTime(time)
-                    .build();
-        }
-        return TaskUserDTO.builder()
-                .task(task)
-                .user(User.builder().id(0).build())
-                .createdTime(time)
-                .build();
-    }
-
-
-
-    public static List<TaskUserDTO> getListTaskUserCard(List<Task> tasks){
-        List<TaskUserDTO> tasksDTO = new ArrayList<>();
+    public static List<TaskCardDTO> getListTaskUserCard(List<Task> tasks, long userId){
+        List<TaskCardDTO> tasksDTO = new ArrayList<>();
         for (Task task: tasks) {
-           tasksDTO.add(getTaskUserCard(task));
-        }
-        return tasksDTO;
-    }
-
-
-    public static List<TaskUserDTO> getListTaskExecutorCard(List<Task> tasks){
-        List<TaskUserDTO> tasksDTO = new ArrayList<>();
-        for (Task task: tasks) {
-            tasksDTO.add(getTaskExecutorCard(task));
+           tasksDTO.add(getTaskUserCard(task, userId));
         }
         return tasksDTO;
     }
@@ -172,7 +158,6 @@ public class ConverterDTO {
                                              .apartment(allArgsAddressDTO.getApartment())
                                              .build();
     }
-
 
 
 }

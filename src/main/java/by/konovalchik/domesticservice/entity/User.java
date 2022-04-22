@@ -1,5 +1,6 @@
 package by.konovalchik.domesticservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,6 +36,7 @@ public class User implements UserDetails {
     @Column(length = 20, nullable = false)
     private String  username;
 
+    @JsonIgnore
     @Column(length = 500, nullable = false)
     private String password;
 
@@ -47,10 +49,10 @@ public class User implements UserDetails {
     @ManyToMany(mappedBy = "users",  cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Task> tasks;
 
-
     @Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER )
     private Set<Role> roles = new HashSet<>();
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -87,10 +89,12 @@ public class User implements UserDetails {
                 password.equals(user.password);
     }
 
+
     @Override
     public int hashCode() {
         return Objects.hash(username, password);
     }
+
 
     @Override
     public String toString() {
@@ -107,4 +111,6 @@ public class User implements UserDetails {
                 ", roles=" + roles +
                 '}';
     }
+
+
 }

@@ -12,10 +12,4 @@ import java.util.Optional;
 public interface AddressTaskRepository extends JpaRepository<AddressTask, Long> {
 
 
-
-
-
-
-
-
 }

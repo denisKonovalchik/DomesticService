@@ -33,6 +33,7 @@ public class TelephoneTask {
         return number.equals(that.number);
     }
 
+
     @Override
     public int hashCode() {
         return Objects.hash(number);
@@ -46,4 +47,6 @@ public class TelephoneTask {
                 ", number='" + number + '\'' +
                 '}';
     }
+
+
 }

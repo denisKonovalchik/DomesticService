@@ -2,13 +2,12 @@ package by.konovalchik.domesticservice.controller;
 
 
 import by.konovalchik.domesticservice.dto.addressDTO.AllArgsAddressDTO;
-import by.konovalchik.domesticservice.dto.cardDTO.TaskUserDTO;
+import by.konovalchik.domesticservice.dto.cardDTO.TaskCardDTO;
 import by.konovalchik.domesticservice.dto.gradeDTO.GradeDTO;
 import by.konovalchik.domesticservice.dto.taskDTO.*;
 import by.konovalchik.domesticservice.dto.telephoneDTO.IdNumberTelDTO;
 import by.konovalchik.domesticservice.entity.CategoryOfTask;
 import by.konovalchik.domesticservice.entity.Task;
-import by.konovalchik.domesticservice.entity.TaskStatus;
 import by.konovalchik.domesticservice.entity.User;
 import by.konovalchik.domesticservice.service.RatingService;
 import by.konovalchik.domesticservice.service.TaskService;
@@ -22,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -72,7 +73,7 @@ public class UserTaskController {
 
 
     @GetMapping("/deleteTask/{id}")
-    public ModelAndView deleteTask(@PathVariable long id, ModelAndView modelAndView){
+    public ModelAndView deleteTask(@PathVariable @Min(value=1) long id, ModelAndView modelAndView){
         modelAndView.setViewName("taskToDelete");
         User user = userService.getCurrentUser();
         if(taskService.delete(user, id)){
@@ -86,7 +87,7 @@ public class UserTaskController {
 
 
     @GetMapping("/closeTask/{id}")
-    public ModelAndView closeTask(@PathVariable long id,ModelAndView modelAndView){
+    public ModelAndView closeTask(@PathVariable @Min(value=1) long id,ModelAndView modelAndView){
         modelAndView.addObject("taskIdToClose", id);
         modelAndView.addObject("gradeDTO", new GradeDTO());
         modelAndView.setViewName("taskToCompleted");
@@ -102,15 +103,17 @@ public class UserTaskController {
 
 
     @PostMapping("/closeTask")
-    public ModelAndView closeTask(@ModelAttribute("GradeDTO") GradeDTO gradeDTO, ModelAndView modelAndView){
+    public ModelAndView closeTask(@Valid @ModelAttribute("GradeDTO") GradeDTO gradeDTO, BindingResult bindingResult, ModelAndView modelAndView){
         modelAndView.setViewName("ratingToUpdateUs");
-        User user = userService.getCurrentUser();
-        if(ratingService.updateRatingUser(gradeDTO.getGrade(), user.getId(), gradeDTO.getId())){
-            modelAndView.addObject("messageRatingUpdate1", ControllerMessageManager.UPDATE_RATING_SUCCESSFULLY);
-        }else{
-            modelAndView.addObject("messageRatingUpdate2", ControllerMessageManager.UPDATE_RATING_FAIL);
+        if(!bindingResult.hasErrors()) {
+            User user = userService.getCurrentUser();
+            if (ratingService.updateRatingUser(gradeDTO.getGrade(), user.getId(), gradeDTO.getId())) {
+                modelAndView.addObject("messageRatingUpdate1", ControllerMessageManager.UPDATE_RATING_SUCCESSFULLY);
+            } else {
+                modelAndView.addObject("messageRatingUpdate2", ControllerMessageManager.UPDATE_RATING_FAIL);
+            }
         }
-        return modelAndView;
+            return modelAndView;
     }
 
 
@@ -121,20 +124,21 @@ public class UserTaskController {
         User user = userService.getCurrentUser();
         Optional<List<Task>> tasks = taskService.getAllByUserId(user.getId());
         if(tasks.isPresent()){
-            List<TaskUserDTO> listTaskDTO = ConverterDTO.getListTaskUserCard(tasks.get());
+            List<TaskCardDTO> listTaskDTO = ConverterDTO.getListTaskUserCard(tasks.get(), user.getId());
             modelAndView.addObject("listTask", listTaskDTO);
         }
         return modelAndView;
     }
 
 
+
     @GetMapping("/getTaskStatus/{statusTask}")
-    public ModelAndView userHomeStatus(@PathVariable("statusTask") String status, ModelAndView modelAndView){
+    public ModelAndView userHomeStatus(@PathVariable("statusTask") @NotEmpty String status, ModelAndView modelAndView){
         modelAndView.setViewName("userAccount");
         User user = userService.getCurrentUser();
         Optional<List<Task>> tasks = taskService.getAllByUserIdAndStatus(user.getId(), status);
         if(tasks.isPresent()){
-            List<TaskUserDTO> listTaskDTO = ConverterDTO.getListTaskUserCard(tasks.get());
+            List<TaskCardDTO> listTaskDTO = ConverterDTO.getListTaskUserCard(tasks.get(), user.getId());
             modelAndView.addObject("listTask", listTaskDTO);
         }
         return modelAndView;
@@ -143,20 +147,21 @@ public class UserTaskController {
 
 
     @GetMapping("/getTaskCategory/{categoryTask}")
-    public ModelAndView userHomeCategory(@PathVariable("categoryTask") String category, ModelAndView modelAndView){
+    public ModelAndView userHomeCategory(@PathVariable("categoryTask") @NotEmpty String category, ModelAndView modelAndView){
         modelAndView.setViewName("userAccount");
         User user = userService.getCurrentUser();
         Optional<List<Task>> tasks = taskService.getAllByUserIdAndCategory(user.getId(), category);
         if(tasks.isPresent()){
-            List<TaskUserDTO> listTaskDTO = ConverterDTO.getListTaskUserCard(tasks.get());
+            List<TaskCardDTO> listTaskDTO = ConverterDTO.getListTaskUserCard(tasks.get(), user.getId());
             modelAndView.addObject("listTask", listTaskDTO);
         }
         return modelAndView;
     }
 
 
+
     @GetMapping("/updateTaskCategory/{id}")
-    public ModelAndView updateTaskCategory(@PathVariable long id, ModelAndView modelAndView){
+    public ModelAndView updateTaskCategory(@PathVariable @Min(value=1) long id, ModelAndView modelAndView){
         modelAndView.setViewName("updateTaskCategory");
         modelAndView.addObject("taskId", id);
         modelAndView.addObject("categories", Arrays.asList(CategoryOfTask.values()));
@@ -182,9 +187,8 @@ public class UserTaskController {
 
 
 
-
     @GetMapping("/updateTaskDescription/{id}")
-    public ModelAndView updateTaskDescription(@PathVariable long id, ModelAndView modelAndView){
+    public ModelAndView updateTaskDescription(@PathVariable @Min(value = 1) long id, ModelAndView modelAndView){
         modelAndView.setViewName("updateTaskDescription");
         modelAndView.addObject("taskId", id);
         modelAndView.addObject("updateTaskDescriptionDTO", new DescriptionTaskDTO());
@@ -212,7 +216,7 @@ public class UserTaskController {
 
 
     @GetMapping("/updateTaskTelephone/{id}")
-    public ModelAndView updateTaskTelephone(@PathVariable long id, ModelAndView modelAndView){
+    public ModelAndView updateTaskTelephone(@PathVariable @Min(value=1) long id, ModelAndView modelAndView){
         modelAndView.setViewName("updateTaskTelephone");
         modelAndView.addObject("taskId", id);
         modelAndView.addObject("updateTaskTelephoneDTO", new IdNumberTelDTO());
@@ -238,7 +242,7 @@ public class UserTaskController {
 
 
     @GetMapping("/updateTaskAddress/{id}")
-    public ModelAndView updateTaskAddress(@PathVariable long id, ModelAndView modelAndView){
+    public ModelAndView updateTaskAddress(@PathVariable @Min(value=1) long id, ModelAndView modelAndView){
         modelAndView.setViewName("updateTaskAddress");
         modelAndView.addObject("taskId", id);
         modelAndView.addObject("updateTaskAddressDTO", new AllArgsAddressDTO());
@@ -264,7 +268,7 @@ public class UserTaskController {
 
 
     @GetMapping("/updateTaskPrice/{id}")
-    public ModelAndView updateTaskPrice(@PathVariable long id, ModelAndView modelAndView){
+    public ModelAndView updateTaskPrice(@PathVariable @Min(value=1) long id, ModelAndView modelAndView){
         modelAndView.setViewName("updateTaskPrice");
         modelAndView.addObject("taskId", id);
         modelAndView.addObject("updateTaskPriceDTO", new PriceTaskDTO());
@@ -290,7 +294,7 @@ public class UserTaskController {
 
 
     @GetMapping("/updateTaskExpress/{id}")
-    public ModelAndView updateTaskExpress(@PathVariable long id, ModelAndView modelAndView){
+    public ModelAndView updateTaskExpress(@PathVariable @Min(value=1) long id, ModelAndView modelAndView){
         modelAndView.setViewName("updateTaskExpress");
         modelAndView.addObject("taskId", id);
         modelAndView.addObject("updateTaskExpressDTO", new ExpressTaskDTO());
@@ -309,7 +313,6 @@ public class UserTaskController {
         }
         return modelAndView;
     }
-
 
 
 }

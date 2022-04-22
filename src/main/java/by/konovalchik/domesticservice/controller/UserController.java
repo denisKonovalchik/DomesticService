@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 
 import java.util.Optional;
 
@@ -26,7 +27,6 @@ public class UserController {
 
     @Autowired
     UserService userService;
-
 
 
     @GetMapping("/userProfile")
@@ -46,7 +46,7 @@ public class UserController {
 
 
     @GetMapping("/getUserById/{id}")
-    public ModelAndView getUserById(@PathVariable long id, ModelAndView modelAndView) {
+    public ModelAndView getUserById(@PathVariable @Min(value=1) long id, ModelAndView modelAndView) {
         modelAndView.setViewName("userInfo");
         Optional<User> userInfoOpt = userService.getUserById(id);
         if(userInfoOpt.isPresent()){

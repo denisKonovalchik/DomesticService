@@ -13,7 +13,6 @@ import java.util.Optional;
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
 
-
     @Query(value = " SELECT tu.task_id FROM users_tasks tu WHERE tu.user_id = ?1 ", nativeQuery=true)
     Optional<List<Long>> findAllIdByUserId(long userId);
 

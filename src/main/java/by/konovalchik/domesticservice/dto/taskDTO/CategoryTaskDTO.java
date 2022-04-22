@@ -15,4 +15,5 @@ public class CategoryTaskDTO {
 
     private CategoryOfTask category;
 
+
 }

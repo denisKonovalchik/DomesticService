@@ -18,4 +18,5 @@ public class LastNameUserDTO {
     @Size(min = 3, max = 30, message = ConstraintsMessageManager.LAST_NAME_ERROR)
     private String lastName;
 
+
 }

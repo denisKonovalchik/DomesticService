@@ -20,4 +20,6 @@ public class PictureUserDTO {
     @Size(min = 3, max = 500, message = ConstraintsMessageManager.PICTURE_ERROR)
     private String picture;
 
+
 }
+

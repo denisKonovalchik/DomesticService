@@ -18,4 +18,6 @@ public class UsernameUserDTO {
     @NotBlank
     @Size(min = 3, max = 30, message = ConstraintsMessageManager.USERNAME_ERROR)
     private String  username;
+
+
 }

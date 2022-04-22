@@ -24,7 +24,6 @@ import java.util.Set;
 @Builder
 public class AllArgUserDTO {
 
-
     private Role role;
 
     @NotBlank
@@ -55,7 +54,6 @@ public class AllArgUserDTO {
     @Size(min = 6, max = 500, message = ConstraintsMessageManager.PASSWORD_ERROR)
     @Pattern(regexp = Patterns.PASSWORD)
     private String password;
-
 
 
 }

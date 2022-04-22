@@ -31,7 +31,6 @@ public class UserGrade {
     Task task;
 
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -39,6 +38,7 @@ public class UserGrade {
         UserGrade userGrade = (UserGrade) o;
         return id == userGrade.id;
     }
+
 
     @Override
     public int hashCode() {
@@ -55,4 +55,6 @@ public class UserGrade {
                 ", userRating=" + userRating +
                 '}';
     }
+
+
 }

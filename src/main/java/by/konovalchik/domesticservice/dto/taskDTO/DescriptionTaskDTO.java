@@ -25,4 +25,5 @@ public class DescriptionTaskDTO {
     @Size(min = 3, max = 500, message = ConstraintsMessageManager.NOT_EMPTY_ERROR)
     private String description;
 
+
 }

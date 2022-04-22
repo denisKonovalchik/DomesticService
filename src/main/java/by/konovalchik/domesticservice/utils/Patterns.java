@@ -7,4 +7,5 @@ public class Patterns {
     public static final String PASSWORD = "^((?=\\S*?[A-Z])(?=\\S*?[a-z])(?=\\S*?[0-9]).{6,})\\S$";
     public static final String TIME_FORMAT = "yyyy-MM-dd HH:mm";
 
+
 }

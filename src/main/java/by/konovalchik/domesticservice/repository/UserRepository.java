@@ -13,12 +13,12 @@ import java.util.Set;
 
 public interface UserRepository  extends JpaRepository<User, Long>  {
 
-
     Optional<User> findByUsername(String username);
 
+    boolean existsByUsername(String userName);
 
-    @Query(value="SELECT * FROM users u LEFT JOIN user_roles ur ON u.id = ur.user_id WHERE u.email = ?1 AND ur.roles = ?2 ", nativeQuery=true)
-    Optional<User> findByEmailAndRoles(String email, String role);
+    @Query(value="SELECT * FROM users u LEFT JOIN user_roles ur ON u.id = ur.user_id WHERE u.username = ?1 AND ur.roles = ?2 ", nativeQuery=true)
+    Optional<User> findByUsernameAndRoles(String username, String role);
 
 
 }

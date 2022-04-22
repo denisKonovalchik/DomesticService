@@ -19,4 +19,5 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
         httpServletResponse.getOutputStream().println(ControllerMessageManager.AUTH_FAIL);
     }
 
+
 }

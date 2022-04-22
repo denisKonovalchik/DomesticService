@@ -24,4 +24,5 @@ public class UsernamePasswordUserDTO {
     @Pattern(regexp = Patterns.PASSWORD, message = ConstraintsMessageManager.PASSWORD_ERROR)
     private String password;
 
+
 }

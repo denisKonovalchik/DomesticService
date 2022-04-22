@@ -15,7 +15,6 @@ import javax.validation.constraints.Size;
 @Data
 public class ArgsNoIdAddressDTO {
 
-
     @NotBlank
     @Size(min = 3, max = 20, message = ConstraintsMessageManager.NAME_OF_CITY_ERROR)
     private String city;
@@ -31,7 +30,6 @@ public class ArgsNoIdAddressDTO {
     @NotBlank
     @NotEmpty(message = ConstraintsMessageManager.NOT_EMPTY_ERROR)
     private String apartment;
-
 
 
 }

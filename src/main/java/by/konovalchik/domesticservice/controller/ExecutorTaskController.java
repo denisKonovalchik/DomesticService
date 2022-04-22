@@ -1,9 +1,8 @@
 package by.konovalchik.domesticservice.controller;
 
 
-import by.konovalchik.domesticservice.dto.cardDTO.TaskUserDTO;
+import by.konovalchik.domesticservice.dto.cardDTO.TaskCardDTO;
 import by.konovalchik.domesticservice.dto.gradeDTO.GradeDTO;
-import by.konovalchik.domesticservice.entity.CategoryOfTask;
 import by.konovalchik.domesticservice.entity.Task;
 import by.konovalchik.domesticservice.entity.TaskStatus;
 import by.konovalchik.domesticservice.entity.User;
@@ -14,9 +13,13 @@ import by.konovalchik.domesticservice.utils.ControllerMessageManager;
 import by.konovalchik.domesticservice.utils.ConverterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,14 +39,13 @@ public class ExecutorTaskController {
 
 
 
-
     @GetMapping("/getTask")
     public ModelAndView userHome(ModelAndView modelAndView){
         modelAndView.setViewName("executorAccount");
         User user = userService.getCurrentUser();
         Optional<List<Task>> tasks = taskService.getAllByUserIdOrStatus(user.getId(), "ACTIVE");
         if(tasks.isPresent()){
-            List<TaskUserDTO> listTaskDTO = ConverterDTO.getListTaskExecutorCard(tasks.get());
+            List<TaskCardDTO> listTaskDTO = ConverterDTO.getListTaskUserCard(tasks.get(), user.getId());
             modelAndView.addObject("listTaskEx", listTaskDTO);
         }
         return modelAndView;
@@ -52,12 +54,12 @@ public class ExecutorTaskController {
 
 
     @GetMapping("/getTaskStatus/{statusTask}")
-    public ModelAndView userHomeStatus(@PathVariable("statusTask") String status, ModelAndView modelAndView){
+    public ModelAndView userHomeStatus(@PathVariable("statusTask") @NotEmpty String status, ModelAndView modelAndView){
         modelAndView.setViewName("executorAccount");
         User user = userService.getCurrentUser();
         Optional<List<Task>> tasks = taskService.getAllByExecutorIdAndStatus(user.getId(), status);
         if(tasks.isPresent()){
-            List<TaskUserDTO> listTaskDTO = ConverterDTO.getListTaskExecutorCard(tasks.get());
+            List<TaskCardDTO> listTaskDTO = ConverterDTO.getListTaskUserCard(tasks.get(), user.getId());
             modelAndView.addObject("listTaskEx", listTaskDTO);
         }
         return modelAndView;
@@ -66,12 +68,12 @@ public class ExecutorTaskController {
 
 
     @GetMapping("/getTaskCategory/{categoryTask}")
-    public ModelAndView userHomeCategory(@PathVariable("categoryTask") String category, ModelAndView modelAndView){
+    public ModelAndView userHomeCategory(@PathVariable("categoryTask") @NotEmpty String category, ModelAndView modelAndView){
         modelAndView.setViewName("executorAccount");
         User user = userService.getCurrentUser();
         Optional<List<Task>> tasks = taskService.getAllByUserIdOrStatusAndCategory(user.getId(), "ACTIVE", category);
         if(tasks.isPresent()){
-            List<TaskUserDTO> listTaskDTO = ConverterDTO.getListTaskExecutorCard(tasks.get());
+            List<TaskCardDTO> listTaskDTO = ConverterDTO.getListTaskUserCard(tasks.get(), user.getId());
             modelAndView.addObject("listTaskEx", listTaskDTO);
         }
         return modelAndView;
@@ -80,7 +82,7 @@ public class ExecutorTaskController {
 
 
     @GetMapping("/taskToWork/{id}")
-    public ModelAndView taskToWork(@PathVariable long id, ModelAndView modelAndView){
+    public ModelAndView taskToWork(@PathVariable @Min(value=1) long id, ModelAndView modelAndView){
         modelAndView.setViewName("taskToWork");
         User user = userService.getCurrentUser();
         if(taskService.getTaskToWork(id, user)){
@@ -94,11 +96,10 @@ public class ExecutorTaskController {
 
 
     @GetMapping("/taskToDone/{id}")
-    public ModelAndView taskToDone(@PathVariable long id, ModelAndView modelAndView){
+    public ModelAndView taskToDone(@PathVariable  @Min(value=1) long id, ModelAndView modelAndView){
         modelAndView.addObject("taskIdToDone", id);
         modelAndView.addObject("gradeDTOex", new GradeDTO());
         modelAndView.setViewName("taskToDone");
-        User user = userService.getCurrentUser();
         if(taskService.updateStatus(id, TaskStatus.DONE)){
             modelAndView.addObject("messageTaskToDone1", ControllerMessageManager.TASK_TO_DONE_SUCCESSFULLY);
         }else{
@@ -110,15 +111,17 @@ public class ExecutorTaskController {
 
 
     @PostMapping("/taskToDone")
-    public ModelAndView taskToDone(@ModelAttribute("gradeDTOex") GradeDTO gradeDTO, ModelAndView modelAndView){
+    public ModelAndView taskToDone(@Valid @ModelAttribute("gradeDTOex") GradeDTO gradeDTO, BindingResult bindingResult, ModelAndView modelAndView){
         modelAndView.setViewName("ratingToUpdateEx");
-        User user = userService.getCurrentUser();
-        if(ratingService.updateRatingUser(gradeDTO.getGrade(), user.getId(), gradeDTO.getId())){
-            modelAndView.addObject("messageRatingUpdate1", ControllerMessageManager.UPDATE_RATING_SUCCESSFULLY);
-        }else{
-            modelAndView.addObject("messageRatingUpdate2", ControllerMessageManager.UPDATE_RATING_FAIL);
+        if(!bindingResult.hasErrors()){
+            User user = userService.getCurrentUser();
+            if(ratingService.updateRatingUser(gradeDTO.getGrade(), user.getId(), gradeDTO.getId())){
+                modelAndView.addObject("messageRatingUpdate1", ControllerMessageManager.UPDATE_RATING_SUCCESSFULLY);
+            }else{
+                modelAndView.addObject("messageRatingUpdate2", ControllerMessageManager.UPDATE_RATING_FAIL);
+            }
         }
-        return modelAndView;
+            return modelAndView;
     }
 
 

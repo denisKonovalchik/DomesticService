@@ -34,8 +34,6 @@ public class RatingService {
     private TaskRepository taskRepository;
 
 
-
-
     public long getRatingIdUserByUserIdTaskId(long userId,long taskId ){
         Optional<Task> taskOpt = taskRepository.findTaskById(taskId);
         if(taskOpt.isPresent()){
@@ -98,7 +96,6 @@ public class RatingService {
     public Optional<UserRating> getRatingById(long id){
         return ratingRepository.findById(id);
     }
-
 
 
 }

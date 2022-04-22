@@ -52,9 +52,9 @@ public class AllArgsTaskDTO {
     @Size(min = 9, max= 15,  message = ConstraintsMessageManager.NUMBER_USER_ERROR)
     private String telephone;
 
-
     private double price;
 
     private boolean express;
+
 
 }

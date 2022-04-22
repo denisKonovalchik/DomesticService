@@ -4,15 +4,21 @@ package by.konovalchik.domesticservice.aspect;
 import by.konovalchik.domesticservice.dto.taskDTO.AllArgsTaskDTO;
 import by.konovalchik.domesticservice.dto.userDTO.AllArgUserDTO;
 
+import by.konovalchik.domesticservice.entity.User;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.security.Principal;
 
 
 @Aspect
@@ -28,13 +34,12 @@ public class LogAspect {
     public void registrationUser(AllArgUserDTO userDTO){}
 
 
-
     @AfterReturning(value = "registrationUser(userDTO)", returning = "modelAndView", argNames = "modelAndView,userDTO")
     public void regUser(ModelAndView modelAndView, AllArgUserDTO userDTO){
-        if(modelAndView.isEmpty()) {
-            logger.warn("Failed username {} registration attempt", userDTO.getUsername() );
+        if(modelAndView.getModel().containsKey("messageReg2")) {
+            logger.warn("Failed username: {} registration attempt", userDTO.getUsername() );
         }else{
-            logger.info("Registered new user {}!", userDTO.getUsername());
+            logger.info("Registered new user: {}!", userDTO.getUsername());
         }
     }
 
@@ -44,13 +49,10 @@ public class LogAspect {
     public void authUser(String username){}
 
 
-
-    @AfterReturning(value = "authUser(username)", returning = "userDetails", argNames = "userDetails,username")
+    @AfterReturning(value = "authUser(username)", returning = "userDetails", argNames = "userDetails, username")
     public void authorizationUser(UserDetails userDetails, String username){
-        if(!userDetails.getAuthorities().isEmpty()) {
+        if(userDetails.getUsername().equals(username)) {
             logger.info("User {} sign in!", username);
-        }else{
-            logger.warn("failed username {} authorization attempt", username);
         }
     }
 
@@ -59,7 +61,6 @@ public class LogAspect {
 
     @Pointcut(value = "execution(public * by.konovalchik.domesticservice.controller.UserTaskController.createTask(..)) && args(allArgsTaskDTO,..) ")
     public void crTask(AllArgsTaskDTO allArgsTaskDTO){}
-
 
 
     @AfterReturning(value = "crTask(allArgsTaskDTO)",  argNames = "modelAndView ,allArgsTaskDTO",  returning = "modelAndView")
@@ -77,7 +78,6 @@ public class LogAspect {
     public void delTask(long id){}
 
 
-
     @AfterReturning(value = "delTask(id)",  argNames = "modelAndView,id",  returning = "modelAndView")
     public void deleteTask(ModelAndView modelAndView, long id){
         if(modelAndView.getModel().containsKey("messageDeleteTask1")) {
@@ -91,7 +91,6 @@ public class LogAspect {
 
     @Pointcut(value = "execution(public * by.konovalchik.domesticservice.service.TaskService.closeTask(..)) && args(id,..) ")
     public void clTask(long id){}
-
 
 
     @AfterReturning(value = "clTask(id)",  argNames = "flag,id",  returning = "flag")
@@ -109,7 +108,6 @@ public class LogAspect {
     public void chanExpress(long id){}
 
 
-
     @AfterReturning(value = "chanExpress(id)",  argNames = "flag,id",  returning = "flag")
     public void changeExpress(Boolean flag, long id){
         if(flag) {
@@ -123,7 +121,6 @@ public class LogAspect {
 
     @Pointcut(value = "execution(public * by.konovalchik.domesticservice.service.TaskService.getTaskToWork(..)) && args(id,..) ")
     public void taskToWork(long id){}
-
 
 
     @AfterReturning(value = "taskToWork(id)",  argNames = "flag,id",  returning = "flag")
@@ -141,7 +138,6 @@ public class LogAspect {
     public void taskToDone(long id){}
 
 
-
     @AfterReturning(value = "taskToDone(id)",  argNames = "modelAndView,id",  returning = "modelAndView")
     public void toDone(ModelAndView modelAndView, long id){
         if(modelAndView.getModel().containsKey("messageTaskToDone1")) {
@@ -157,7 +153,6 @@ public class LogAspect {
     public void updUserRating(long id){}
 
 
-
     @AfterReturning(value = "updUserRating(id)",  argNames = "flag,id",  returning = "flag")
     public void userRating(Boolean flag, long id){
         if(flag) {
@@ -166,7 +161,6 @@ public class LogAspect {
             logger.warn("The user {} has not been rated task", id);
         }
     }
-
 
 
 }

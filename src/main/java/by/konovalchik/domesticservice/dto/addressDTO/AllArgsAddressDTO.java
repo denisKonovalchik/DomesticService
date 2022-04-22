@@ -15,7 +15,6 @@ import javax.validation.constraints.Size;
 @Data
 public class AllArgsAddressDTO {
 
-
     private long id;
 
     @NotBlank
@@ -33,5 +32,6 @@ public class AllArgsAddressDTO {
     @NotBlank
     @NotEmpty(message = ConstraintsMessageManager.NOT_EMPTY_ERROR)
     private String apartment;
+
 
 }

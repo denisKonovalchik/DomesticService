@@ -300,7 +300,6 @@ public class TaskService {
 
 
 
-
     public Optional<List<Task>> getAllByExecutorIdAndStatus(long executorId, String status){
         Optional<List<Long>> tasksId = taskRepository.findAllIdByUserId(executorId);
         if(tasksId.isPresent()) {
@@ -314,7 +313,6 @@ public class TaskService {
             return Optional.empty();
         }
     }
-
 
 
 
@@ -336,7 +334,6 @@ public class TaskService {
     public Optional<Task> getTaskById(long taskId){
        return taskRepository.findTaskById(taskId);
     }
-
 
 
 }

@@ -18,5 +18,4 @@ public class ConstraintsMessageManager {
     public static final String PRICE_ERROR = "Price cannot have less then 1 and more then 10 numbers";
 
 
-
 }

@@ -3,17 +3,13 @@ package by.konovalchik.domesticservice.utils;
 public class ControllerMessageManager {
 
     public static final String REG_SUCCESSFULLY = "Registration passed successfully";
-    public static final String REG_FAIL= "This user already exist";
-
-    public static final String REG_EXECUTOR_FAIL= "Registration failed!";
-    public static final String AUTH_EXECUTOR_FAIL= "Authorization failed!";
+    public static final String REG_FAIL= "This user already taken!";
 
     public static final String AUTH_FAIL= "User not found";
     public static final String AUTH_SUCCESSFULLY = "Authorization passed successfully";
 
     public static final String SAVE_TASK_SUCCESSFULLY = "Task has been saved!";
     public static final String SAVE_TASK_FAIL = "Task has not been saved!";
-
 
     public static final String UPDATE_NAME_SUCCESSFULLY = "First name has been changed!";
     public static final String UPDATE_NAME_FAIL = "First name has not been changed!";
@@ -72,7 +68,7 @@ public class ControllerMessageManager {
     public static final String UPDATE_ADDRESS_SUCCESSFULLY = "Address successfully updated";
     public static final String UPDATE_ADDRESS_FAIL = "The update of the address failed!";
 
-    public static final String USER_NOT_FOUND = "There is no information about the requested user!";
+    public static final String USER_NOT_FOUND = "User not found!";
 
     public static final String TASK_TO_WORK_SUCCESSFULLY = "Task has been taken to work!";
     public static final String TASK_TO_WORK_FAIL = "Task has not been taken to work!";
@@ -82,4 +78,6 @@ public class ControllerMessageManager {
 
     public static final String CLOSE_TASK_SUCCESSFULLY = "Task has been closed!";
     public static final String CLOSE_TASK_FAIL = "Task has not been closed!";
+
+
 }

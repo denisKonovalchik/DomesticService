@@ -33,7 +33,7 @@ public class UserService implements UserDetailsService {
 
     public boolean save(User user) {
         Role role = user.getRoles().stream().findFirst().get();
-        Optional<User> userOpt =  userRepository.findByEmailAndRoles(user.getEmail(), role.name() );
+        Optional<User> userOpt =  userRepository.findByUsernameAndRoles(user.getUsername(), role.name() );
         if(userOpt.isPresent()){
             return false;
             } else {
@@ -58,13 +58,19 @@ public class UserService implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        Optional<User> byUsername = userRepository.findByUsername(s);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> byUsername = userRepository.findByUsername(username);
         if (byUsername.isPresent()){
             return byUsername.get();
         } else {
-            throw new UsernameNotFoundException("Unknown user by email: " + s);
+            throw new UsernameNotFoundException("Unknown user : " + username);
         }
+    }
+
+
+
+    public boolean isExistByUserName(String userName){
+        return userRepository.existsByUsername(userName);
     }
 
 
@@ -193,7 +199,6 @@ public class UserService implements UserDetailsService {
     private boolean checkPassword(String newPassword, String confirmPassword) {
         return newPassword.equals(confirmPassword);
     }
-
 
 
 }

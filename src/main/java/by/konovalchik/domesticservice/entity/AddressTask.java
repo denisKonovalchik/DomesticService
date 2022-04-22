@@ -42,10 +42,12 @@ public class AddressTask {
                 Objects.equals(apartment, that.apartment);
     }
 
+
     @Override
     public int hashCode() {
         return Objects.hash(city, street, house);
     }
+
 
     @Override
     public String toString() {
@@ -57,4 +59,6 @@ public class AddressTask {
                 ", apartment=" + apartment +
                 '}';
     }
+
+
 }

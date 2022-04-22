@@ -4,11 +4,9 @@ package by.konovalchik.domesticservice.controller;
 import by.konovalchik.domesticservice.dto.taskDTO.AllArgsTaskDTO;
 import by.konovalchik.domesticservice.dto.userDTO.AllArgUserDTO;
 import by.konovalchik.domesticservice.entity.*;
-import by.konovalchik.domesticservice.service.RatingService;
 import by.konovalchik.domesticservice.service.TaskService;
 import by.konovalchik.domesticservice.service.UserService;
 import by.konovalchik.domesticservice.utils.ConverterDTO;
-import net.minidev.json.JSONUtil;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -16,7 +14,6 @@ import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-
 public class TaskControllerTest {
 
     @Autowired
@@ -68,9 +64,8 @@ public class TaskControllerTest {
         Task task = ConverterDTO.getAllArgsTaskDTO(taskDTO);
         User userBase= (User)userService.loadUserByUsername("userUser");
         taskService.createTask(task, userBase);
-
-
     }
+
 
 
     @ParameterizedTest
@@ -80,13 +75,12 @@ public class TaskControllerTest {
     }
 
 
+
     @ParameterizedTest
     @EnumSource(TaskStatus.class)
     void taskStatusDetectionTest(TaskStatus status){
         assertNotNull(status);
     }
-
-
 
 
 
@@ -112,6 +106,7 @@ public class TaskControllerTest {
     }
 
 
+
     @Test
     void getTaskTest() {
         User user= (User)userService.loadUserByUsername("userUser");
@@ -119,7 +114,6 @@ public class TaskControllerTest {
 
         assertTrue(tasks.isPresent());
         assertEquals(2, tasks.get().size());
-
     }
 
 
@@ -130,7 +124,6 @@ public class TaskControllerTest {
         Optional<Task> taskOpt = taskService.getTaskById(3);
          taskOpt.ifPresent(task -> assertEquals(CategoryOfTask.OTHER, task.getCategory()));
     }
-
 
 
 
@@ -151,9 +144,6 @@ public class TaskControllerTest {
         Optional<Task> taskOpt = taskService.getTaskById(3);
         taskOpt.ifPresent(task -> assertEquals(task.getAddressTask().getStreet(), street));
     }
-
-
-
 
 
 
