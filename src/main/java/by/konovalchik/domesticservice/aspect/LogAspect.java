@@ -4,21 +4,16 @@ package by.konovalchik.domesticservice.aspect;
 import by.konovalchik.domesticservice.dto.taskDTO.AllArgsTaskDTO;
 import by.konovalchik.domesticservice.dto.userDTO.AllArgUserDTO;
 
-import by.konovalchik.domesticservice.entity.User;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.security.Principal;
 
 
 @Aspect

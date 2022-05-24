@@ -1,6 +1,5 @@
 package by.konovalchik.domesticservice.controller;
 
-
 import by.konovalchik.domesticservice.dto.taskDTO.AllArgsTaskDTO;
 import by.konovalchik.domesticservice.dto.userDTO.AllArgUserDTO;
 import by.konovalchik.domesticservice.entity.*;
@@ -13,11 +12,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-
 import java.util.List;
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -30,7 +26,6 @@ public class TaskControllerTest {
 
     @Autowired
     TaskService taskService;
-
 
 
     @BeforeAll
